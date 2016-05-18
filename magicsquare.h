@@ -15,8 +15,8 @@ public:
     MagicSquare(int n);
     void BuildSquare_odd(int n);
     void BuildSquare_even(int n);
-    void BuildSquare4(vector<vector<int> > & matrix1, int n);
-    void BuildSquare6(vector<vector<int> > & matrix1,int n);
+    void BuildSquare4(vector<vector<long long> > &matrix1, int n);
+    void BuildSquare6(vector<vector<long long> > & matrix1,int n);
     bool CheckSquare(int n);
     void Zero(int n);
 

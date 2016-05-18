@@ -41,7 +41,7 @@ void MagicSquare::BuildSquare_even(int n)
 {
     int i, j, count = 0, row, column, sm = 0;
     bool even = false, cwise;
-    vector < vector <int> > matrix1;
+    vector < vector <long long> > matrix1;
     matrix1.resize(2*n-2);
     for (i = 0; i < 2*n-2; i++)
         matrix1[i].resize(n);
@@ -146,7 +146,7 @@ void MagicSquare::BuildSquare_even(int n)
         BuildSquare6(matrix1, n);
 }
 
-void MagicSquare::BuildSquare4(vector<vector<int> > & matrix1,int n)
+void MagicSquare::BuildSquare4(vector<vector<long long> > & matrix1,int n)
 {
     int i,j;
 
@@ -162,19 +162,20 @@ void MagicSquare::BuildSquare4(vector<vector<int> > & matrix1,int n)
             if(matrix1[i][j]!= 0)
                 matrix1[i-n][j] = matrix1[i][j];
         }
-         qDebug()<<"copiyng start";
+        qDebug()<<"copiyng start";
         int k;
         for (i = n/2 - 1, k = 0; i < n + n/2 - 1; i++, k++)
             for(j = 0; j < n; j++)
                 matrix[k][j] = matrix1[i][j];//копирование матрицы
+        qDebug()<<"copiyng finished";
 }
 
 
-void MagicSquare::BuildSquare6(vector<vector<int> > & matrix1,int n)
+void MagicSquare::BuildSquare6(vector<vector<long long> > &matrix1, int n)
 {
     n = n + 2;
 
-    vector < vector <int> > matrix2;
+    vector < vector <long long> > matrix2;
     matrix2.resize(2*n-2);
 
     int i, j;

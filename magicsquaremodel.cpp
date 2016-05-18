@@ -44,6 +44,8 @@ bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, 
 
 Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
 {
-    return  Qt::ItemIsEditable;
+    if(!index.isValid())
+        return 0;
+    return  Qt::ItemIsEditable | QAbstractItemModel::flags(index);
 }
 

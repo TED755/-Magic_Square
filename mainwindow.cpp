@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //QVariant value = model->data(index);
     //qDebug() << value;
-    start->setText("Warning: Pointless Button");
+    start->setText("Start game");
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
     layout->addWidget(str);
     //layout->addWidget(str1);

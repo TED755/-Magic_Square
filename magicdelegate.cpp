@@ -1,8 +1,10 @@
 #include "magicdelegate.h"
+#include "magicsquare.h"
 #include <QSpinBox>
 
 MagicDelegate::MagicDelegate()
 {
+    //int n;
 
 }
 
@@ -11,7 +13,7 @@ void MagicDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option, 
     if(index.data().toInt() == 0)
     {
         painter->setPen(Qt::red);
-        painter->drawRect(QRect(option.rect.x() + 2, option.rect.y() + 2, 20, 20));
+        painter->drawRect(QRect(option.rect.x() , option.rect.y() , 98, 28));
     }
     else
         QStyledItemDelegate::paint(painter, option,index);
@@ -24,7 +26,7 @@ QWidget * MagicDelegate::createEditor(QWidget *parent,
 {
     QSpinBox *editor = new QSpinBox(parent);
        editor->setFrame(false);
-       editor->setMinimum(0);
+       editor->setMinimum(1);
        editor->setMaximum(100);
 
        return editor;

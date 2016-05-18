@@ -12,6 +12,7 @@ private:
     QAbstractItemModel *m1;
 
 public:
+    //int n;
     MagicSquareModel(int n) : square(n)
     {
         square.Zero(n);
