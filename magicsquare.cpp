@@ -7,10 +7,13 @@ MagicSquare::MagicSquare(int n)
     matrix.resize(n);
     for (int i = 0; i < matrix.size(); i++)
         matrix[i].resize(n);
-    if (n % 2 != 0){
+    matrixcheck.resize(n);
+    for (int i = 0; i < matrixcheck.size(); i++)
+        matrixcheck[i].resize(n);
+    if (n % 2 != 0)
         BuildSquare_odd(n);
-    }
     else BuildSquare_even(n);
+    matrixcheck = matrix;
 }
 
 
@@ -41,7 +44,7 @@ void MagicSquare::BuildSquare_even(int n)
 {
     int i, j, count = 0, row, column, sm = 0;
     bool even = false, cwise;
-    vector < vector <long long> > matrix1;
+    vector < vector <int> > matrix1;
     matrix1.resize(2*n-2);
     for (i = 0; i < 2*n-2; i++)
         matrix1[i].resize(n);
@@ -146,7 +149,7 @@ void MagicSquare::BuildSquare_even(int n)
         BuildSquare6(matrix1, n);
 }
 
-void MagicSquare::BuildSquare4(vector<vector<long long> > & matrix1,int n)
+void MagicSquare::BuildSquare4(vector<vector<int> > &matrix1, int n)
 {
     int i,j;
 
@@ -171,11 +174,11 @@ void MagicSquare::BuildSquare4(vector<vector<long long> > & matrix1,int n)
 }
 
 
-void MagicSquare::BuildSquare6(vector<vector<long long> > &matrix1, int n)
+void MagicSquare::BuildSquare6(vector<vector<int> > &matrix1, int n)
 {
     n = n + 2;
 
-    vector < vector <long long> > matrix2;
+    vector < vector <int> > matrix2;
     matrix2.resize(2*n-2);
 
     int i, j;
@@ -244,42 +247,3 @@ void MagicSquare::BuildSquare6(vector<vector<long long> > &matrix1, int n)
         for (j = 0; j < n; j++)
             matrix[i][j] = matrix2[i][j];
 }
-
-bool MagicSquare::CheckSquare(int n)
-{
-    int sumD = 0;
-    for (int d = 0; d < n; d++)
-        sumD += matrix[d][d];
-    int sumStr = 0;
-    for (int i = 0; i < n; i++)
-        sumStr += matrix[0][i];
-    int sumCol = 0;
-    for (int j = 0; j < n; j++)
-        sumCol += matrix[j][0];
-    if ((sumD == sumStr) && (sumCol == sumD) && (sumStr == sumCol))
-        return true;
-    else
-        return false;
-}
-
-//void MagicSquare::print(int n)
-//{
-//    qDebug()<<"print start";
-//    for (int row = 0; row < n; row++){
-//        cout << endl;
-//         for (int column = 0; column < n; column++)
-//            cout << matrix[row][column] << "  ";
-//        cout << endl;
-//        }
-//}
-
-//void MagicSquare::Zero(int n)
-//{
-//    int x = n;
-
-//    while (x > 0){
-//        matrix[rand()%n][rand()%n] = 0;
-//        x--;
-//    }
-
-//}

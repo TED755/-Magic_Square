@@ -16,8 +16,13 @@ public:
     MagicSquareModel(int n) : square(n)
     {
         square.Zero(n);
+//        if (square.isFull(n))
+//            if (square.CheckSquare(n))
+//                return;
 
     }
+
+    bool Full (int n);
 
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
   int columnCount(const QModelIndex &parent = QModelIndex())const override;
@@ -28,9 +33,6 @@ public:
   bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole)override;
   Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-private slots:
-
-  void ChangeData(QModelIndex row, QModelIndex column);
 };
 
 #endif // MAGICSQUAREMODEL

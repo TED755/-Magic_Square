@@ -29,6 +29,7 @@ public:
     QVBoxLayout* layout;
     QHBoxLayout* layoutH;
     QPushButton* start;
+    QPushButton* end;
 
     enum Mod {Game, Menu};
     Mod currentMode;

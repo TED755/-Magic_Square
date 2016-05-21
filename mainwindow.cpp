@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     currentMode = Menu;
     layout = new QVBoxLayout(this);
     layoutH = new QHBoxLayout(this);
-    //Startmodel = new QStandardItemModel(this);
     table = new QTableView(this);
     start = new QPushButton(this);
+    end = new QPushButton(this);
     str = new QLineEdit(this);
 
     delegate = new MagicDelegate();
@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     //QVariant value = model->data(index);
     //qDebug() << value;
     start->setText("Start game");
+    end->setText("End game");//end of writing this button
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
     layout->addWidget(str);
     //layout->addWidget(str1);
@@ -35,7 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(table);
     //layout->addWidget(layoutH);
     layout->addWidget(start);
-
+    layout->addWidget(end);
+    end->hide();
     //QTableModel *m = new QTableModel(this);
 }
 
@@ -48,14 +50,16 @@ void MainWindow::startg()
 
     currentMode = Game;
 
+    start->hide();
+
     int a = str->text().toInt();//, b = str1->text().toInt();
     delegate->SetMaxValue(a*a);
-    //table->setModel(model);
-    //Startmodel->insertColumns(0,a);
-    //Startmodel->insertRows(0,a);
+
     model = new MagicSquareModel(a);
     model->insertColumns(0,a);
     model->insertRows(0, a);
+    if (model->Full(a))
+        qDebug() << "It's working!";
     table->setModel(model);
     qDebug()<<"Build";    
 
