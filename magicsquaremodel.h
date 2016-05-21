@@ -9,7 +9,7 @@ class MagicSquareModel : public QAbstractTableModel
 private:
     MagicSquare square;
 
-    QAbstractItemModel *m1;
+   // QAbstractItemModel *m1;
 
 public:
     //int n;

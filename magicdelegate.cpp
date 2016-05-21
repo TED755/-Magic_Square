@@ -1,10 +1,11 @@
 #include "magicdelegate.h"
 #include "magicsquare.h"
 #include <QSpinBox>
+#include <QDebug>
 
 MagicDelegate::MagicDelegate()
 {
-    //int n;
+
 
 }
 
@@ -27,7 +28,7 @@ QWidget * MagicDelegate::createEditor(QWidget *parent,
     QSpinBox *editor = new QSpinBox(parent);
        editor->setFrame(false);
        editor->setMinimum(1);
-       editor->setMaximum(100);
+       editor->setMaximum(maxValue);
 
        return editor;
 }
@@ -46,6 +47,7 @@ void MagicDelegate::setModelData(QWidget *editor,
         spinBox->interpretText();
         int value = spinBox->value();
 
-        model->setData(index, value, Qt::EditRole);
+       if(value !=0)
+           model->setData(index, value, Qt::EditRole);
 }
 

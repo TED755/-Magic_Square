@@ -26,9 +26,9 @@ QVariant MagicSquareModel::data (const QModelIndex &ind, int role) const
 
 void MagicSquareModel::setSourceModel1(QAbstractItemModel *sourceModel1)
 {
-    m1 = sourceModel1;
+   /* m1 = sourceModel1;
 
-    connect(m1, SIGNAL(dataChange(QModelIndex, QModelIndex)), this, SLOT(ChangeData(QModelIndex,QModelIndex)));
+    connect(m1, SIGNAL(dataChange(QModelIndex, QModelIndex)), this, SLOT(ChangeData(QModelIndex,QModelIndex)));*/
 }
 
 void MagicSquareModel::ChangeData(QModelIndex row, QModelIndex column)
@@ -40,12 +40,22 @@ void MagicSquareModel::ChangeData(QModelIndex row, QModelIndex column)
 }
 
 bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, int role )
-{}
+{
+    int row = index.row();
+    int col = index.column();
+
+    if( role == Qt::DisplayRole || role == Qt::EditRole)
+         square.SetValue(row, col, value.toInt());
+}
 
 Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
         return 0;
+
+    if( index.data() != 0) //TODO: create list af unlocked (equal to 0 at start) indexies (pair row, col)
+        return QAbstractItemModel::flags(index);
+
     return  Qt::ItemIsEditable | QAbstractItemModel::flags(index);
 }
 

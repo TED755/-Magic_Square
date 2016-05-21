@@ -22,6 +22,12 @@ public:
     void setModelData(QWidget *editor,
                       QAbstractItemModel *model,
                       const QModelIndex &index) const Q_DECL_OVERRIDE;
+
+    void SetMaxValue(int value) {maxValue = value; }
+
+private:
+    int maxValue;
+
 };
 
 #endif // MAGICDELEGATE_H

@@ -7,6 +7,7 @@
 #include <QtWidgets>
 #include <QWidget>
 #include "magicsquaremodel.h"
+#include "magicdelegate.h"
 
 namespace Ui {
     class MainWindow;
@@ -35,6 +36,10 @@ public:
 private slots:
 
     void startg();
+
+private:
+
+    MagicDelegate *delegate;
 
     //void zero(QTableView* table);
 };

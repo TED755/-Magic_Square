@@ -1,6 +1,6 @@
 #include <QDebug>
 #include "mainwindow.h"
-#include "magicdelegate.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     start = new QPushButton(this);
     str = new QLineEdit(this);
 
-    table->setItemDelegate(new MagicDelegate());
+    delegate = new MagicDelegate();
+    table->setItemDelegate(delegate);
 
     //QModelIndex i(1,1,[](){return;},model->m);
 
@@ -48,6 +49,7 @@ void MainWindow::startg()
     currentMode = Game;
 
     int a = str->text().toInt();//, b = str1->text().toInt();
+    delegate->SetMaxValue(a*a);
     //table->setModel(model);
     //Startmodel->insertColumns(0,a);
     //Startmodel->insertRows(0,a);
@@ -55,18 +57,7 @@ void MainWindow::startg()
     model->insertColumns(0,a);
     model->insertRows(0, a);
     table->setModel(model);
-    qDebug()<<"Build";
-    for(int i = 0; i < a; i++)
-        for(int j = 0; j < a; j++)
-        {
-            //qDebug() << "enter";
-            QModelIndex ind = model->index(i,j);
-
-            model->setData(ind, 0);
-
-            model->setData(ind, QFont("Arial", 15,50) , Qt::FontRole);
-            model->setData(ind,QBrush(Qt::red),Qt::BackgroundRole);
-        }
+    qDebug()<<"Build";    
 
 }
 

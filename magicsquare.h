@@ -35,6 +35,16 @@ public:
                     return QVariant();
     }
 
+    void SetValue (int row, int col, int value)
+    {
+        if(row >= 0 && row < matrix.size()
+                && col >=0 && col <  matrix[0].size())
+            matrix[row][col] = value;
+
+        else
+              return;
+    }
+
 private:
     vector < vector <int> > matrix;
 
