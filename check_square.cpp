@@ -2,7 +2,7 @@
 
 bool MagicSquare::CheckSquare(int n)
 {
-    if ((check_sum(n) == 1) && (check_num(n) == 1))
+    if ((check_sum(n) == 1) /*&& (check_num(n) == 1)*/)
         return true;
     else return false;
 }
@@ -24,14 +24,14 @@ int MagicSquare::check_sum(int n)
         return 0;
 }
 
-int MagicSquare::check_num(int n)
-{//check one that one time
-    vector <int> b;
-    b.resize(n);
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            if (b[matrix[i][j] - 1] == 0)
-                b[matrix[i][j] - 1]++;
-            else return 0;
-    return 1;
-}
+//int MagicSquare::check_num(int n)
+//{//check one that one time
+//    vector <int> b;
+//    b.resize(n);
+//    for (int i = 0; i < n; i++)
+//        for (int j = 0; j < n; j++)
+//            if (b[matrix[i][j] - 1] == 0)
+//                b[matrix[i][j] - 1]++;
+//            else return 0;
+//    return 1;
+//}

@@ -41,8 +41,16 @@ void MagicSquare::SetValue(int row, int col, int value)
 
 bool MagicSquare::isFull(int n)
 {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            if (matrix[i][j] != 0)
+    qDebug() <<"Start check";
+    for (int i = 0; i < n; i++){
+        qDebug() << "enter for i";
+        for (int j = 0; j < n; j++){
+            qDebug() << "enter for j";
+            if (matrix[i][j] != 0){
+                qDebug()<<"returned";
                 return true;
+
+            }
+        }
+    }
 }

@@ -37,6 +37,7 @@ public:
 private slots:
 
     void startg();
+    void endg();
 
 private:
 

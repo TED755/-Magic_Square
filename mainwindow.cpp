@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     start->setText("Start game");
     end->setText("End game");//end of writing this button
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
+
+    connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
     layout->addWidget(str);
     //layout->addWidget(str1);
 
@@ -51,6 +53,7 @@ void MainWindow::startg()
     currentMode = Game;
 
     start->hide();
+    end->show();
 
     int a = str->text().toInt();//, b = str1->text().toInt();
     delegate->SetMaxValue(a*a);
@@ -58,11 +61,21 @@ void MainWindow::startg()
     model = new MagicSquareModel(a);
     model->insertColumns(0,a);
     model->insertRows(0, a);
-    if (model->Full(a))
-        qDebug() << "It's working!";
+
     table->setModel(model);
     qDebug()<<"Build";    
 
+}
+
+void MainWindow::endg()
+{
+    int b = str->text().toInt();
+//    currentMode = Menu;
+//    if (currentMode == Menu)
+//        qDebug()<<"Pressed";
+    if (model->Full(b))
+        qDebug() << "It's working!";
+    else qDebug()<< "Not magic";
 }
 
 MainWindow::~MainWindow()
