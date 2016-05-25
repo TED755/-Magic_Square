@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QtWidgets>
 #include <QWidget>
+#include <QTableWidget>
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
 
@@ -43,7 +44,6 @@ private:
 
     MagicDelegate *delegate;
 
-    //void zero(QTableView* table);
 };
 
 #endif // MAINWINDOW_H

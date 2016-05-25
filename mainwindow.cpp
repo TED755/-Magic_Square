@@ -1,4 +1,6 @@
 #include <QDebug>
+#include <QMessageBox>
+#include <QMenu>
 #include "mainwindow.h"
 
 
@@ -17,30 +19,17 @@ MainWindow::MainWindow(QWidget *parent)
     delegate = new MagicDelegate();
     table->setItemDelegate(delegate);
 
-    //QModelIndex i(1,1,[](){return;},model->m);
-
-    //table->edit(i);
-    //str1 = new QLineEdit(this);
-
-    //QModelIndex index = model->index(1,2, QModelIndex());
-
-    //QVariant value = model->data(index);
-    //qDebug() << value;
     start->setText("Start game");
-    end->setText("End game");//end of writing this button
+    end->setText("End game");
+
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
-
     connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
-    layout->addWidget(str);
-    //layout->addWidget(str1);
 
-    //table->setModel(Startmodel);
+    layout->addWidget(str);
     layout->addWidget(table);
-    //layout->addWidget(layoutH);
     layout->addWidget(start);
     layout->addWidget(end);
     end->hide();
-    //QTableModel *m = new QTableModel(this);
 }
 
 
@@ -55,7 +44,10 @@ void MainWindow::startg()
     start->hide();
     end->show();
 
-    int a = str->text().toInt();//, b = str1->text().toInt();
+
+    int a = str->text().toInt();
+
+    str->hide();
     delegate->SetMaxValue(a*a);
 
     model = new MagicSquareModel(a);
@@ -70,12 +62,14 @@ void MainWindow::startg()
 void MainWindow::endg()
 {
     int b = str->text().toInt();
-//    currentMode = Menu;
-//    if (currentMode == Menu)
-//        qDebug()<<"Pressed";
-    if (model->Full(b))
+    if (model->Full(b)){
+        QMessageBox::information(this, "YOU WIN!", "IT'S MAGIC");
         qDebug() << "It's working!";
-    else qDebug()<< "Not magic";
+    }
+    else {
+        QMessageBox::information(this, "Try again", "IT'S NOT MAGIC");
+        qDebug()<< "Not magic";
+    }
 }
 
 MainWindow::~MainWindow()
