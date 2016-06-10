@@ -26,11 +26,12 @@ public:
     QStandardItemModel* Startmodel;
     QTableView* table;
     QLineEdit* str;
-    QLineEdit* str1;
     QVBoxLayout* layout;
-    QHBoxLayout* layoutH;
+    QHBoxLayout* laylabel;
     QPushButton* start;
     QPushButton* end;
+    QLabel* label;
+    QLabel* label2;
 
     enum Mod {Game, Menu};
     Mod currentMode;
@@ -39,6 +40,7 @@ private slots:
 
     void startg();
     void endg();
+    void TextChanged(QString str);
 
 private:
 

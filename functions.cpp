@@ -5,12 +5,18 @@
 void MagicSquare::Zero(int n)
 {
    QList<QPair<int, int> > indexies ;//= new QList<QPair<int, int> >();
+   //QList<QPair <int, int> > saveposition;
 
    for(int i = 0; i < n; i++)
        for(int j = 0; j < n; j++)
        {
            indexies.push_back( QPair<int, int>(i,j));
        }
+//   for(int i = 0; i < n; i++)
+//       for(int j = 0; j < n; j++)
+//       {
+//           saveposition.push_back( QPair<int, int>(i,j));
+//       }
 
 
     int x = n;
@@ -21,7 +27,9 @@ void MagicSquare::Zero(int n)
 
         randomInd = rand() % indexies.size();
         ind = indexies[randomInd];
+        //saveposition[ind.first][ind.second] = indexies;
         matrix[ind.first][ind.second] = 0;
+
         x--;
 
         indexies.removeAt(randomInd);
