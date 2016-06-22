@@ -7,6 +7,11 @@
 #include <QtWidgets>
 #include <QWidget>
 #include <QTableWidget>
+#include <QDebug>
+#include <QMessageBox>
+#include <QMenu>
+#include <QSpinBox>
+#include <QComboBox>
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
 
@@ -25,11 +30,24 @@ public:
     MagicSquareModel *model;
     QStandardItemModel* Startmodel;
     QTableView* table;
+    QSpinBox* num;
+    QComboBox* cmb;
     QLineEdit* str;
+
     QVBoxLayout* layout;
     QHBoxLayout* laylabel;
+
+    QVBoxLayout* laynum;
+    QVBoxLayout* laycompl;
+    QHBoxLayout* sun;
+    QVBoxLayout* main;
+
     QPushButton* start;
     QPushButton* end;
+
+    QLabel* labelnum;
+    QLabel* labelcompl;
+
     QLabel* labelPN;//Показ порядка
     QLabel* labelPT;//Информация о порядке
     QLabel* labelIT;//показ оставшихся ячеек

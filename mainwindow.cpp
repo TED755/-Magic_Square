@@ -1,37 +1,62 @@
-#include <QDebug>
-#include <QMessageBox>
-#include <QMenu>
-#include <QCursor>
 #include "mainwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
+/*menu*/
     currentMode = Menu;
     layout    = new QVBoxLayout(this);
     laylabel = new QHBoxLayout(this);
+
     table   =  new QTableView(this);
     start  = new QPushButton(this);
     end   = new QPushButton(this);
     str    =   new QLineEdit(this);
+    num = new QSpinBox(this);
+    cmb = new QComboBox(this);
     labelPN   =    new QLabel(this);
     labelPT   =     new QLabel(this);
     labelIN = new QLabel(this);
     labelIT = new QLabel(this);
     delegate  =   new MagicDelegate();
 
+    laycompl = new QVBoxLayout(this);
+    laynum = new QVBoxLayout(this);
+    sun = new QHBoxLayout(this);
+    main = new QVBoxLayout(this);
+
+    labelnum = new QLabel(this);
+    labelcompl = new QLabel(this);
+
     table->setItemDelegate(delegate);
 
-    str->setDragEnabled(true);
+    labelcompl->setText("Complexity");
+    labelnum->setText("Number");
+
+    num->setMinimum(3);
+    num->setMaximum(1000);
+
+    //str->setDragEnabled(true);
+    str->hide();
 
     start->setText("Start game");
     start->setDefault(true);
-    start->setEnabled(false);
+    //start->setEnabled(true);
     end->setText("End game");
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
     connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
+
+    laycompl->addWidget(labelcompl);
+    laycompl->addWidget(cmb);
+    laynum->addWidget(labelnum);
+    laynum->addWidget(num);
+    sun->addLayout(laycompl);
+    sun->addLayout(laynum);
+    main->addLayout(sun);
+    main->addWidget(start);
+
 
     laylabel->addWidget(labelPT);
     laylabel->addWidget(labelPN);
@@ -39,22 +64,23 @@ MainWindow::MainWindow(QWidget *parent)
     laylabel->addWidget(labelIN);
 
     layout->addLayout(laylabel);
-    layout->addWidget(str);
+    layout->addLayout(main);
     layout->addWidget(table);
-    layout->addWidget(start);
+    //layout->addWidget(start);
     layout->addWidget(end);
 
+    table->hide();
     end->hide();
     labelPN->hide();
     labelPT->hide();
     labelIN->hide();
     labelIT->hide();
 
-    connect(str, SIGNAL(textChanged(QString)), this, SLOT(TextChanged(QString)));
+    //connect(str, SIGNAL(textChanged(QString)), this, SLOT(TextChanged(QString)));
 
 }
 
-
+/*game*/
 void MainWindow::startg()
 {
 
@@ -66,12 +92,16 @@ void MainWindow::startg()
 
 
     start->hide();
+    num->hide();
+    cmb->hide();
     end->show();
+    table->show();
 
 
-    int a = str->text().toInt();
+    int a = num->text().toInt();
 
     str->hide();
+    num->hide();
 
     delegate->SetMaxValue(a*a);
 
@@ -79,15 +109,11 @@ void MainWindow::startg()
     model->insertColumns(0,a);
     model->insertRows(0, a);
 
-    //count = model->OneMoreitcount;
-
     labelPT->setText("Порядок квадрата: ");
     labelPN->setNum(a);
     labelIT->setText("Осталось незаполненных ячеек: ");
     labelIN->setNum(model->ItemsCountModel());
 
-
-    //labelIN->setNum(count);
     labelPT->show();
     labelPN->show();
     labelIT->show();
@@ -103,7 +129,7 @@ void MainWindow::startg()
 
 void MainWindow::endg()
 {
-    int b = str->text().toInt();
+    int b = num->text().toInt();
     if (model->Full(b)){
         QMessageBox::information(this, "YOU WIN!", "IT'S MAGIC");
         qDebug() << "It's working!";
