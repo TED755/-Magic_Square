@@ -1,5 +1,6 @@
 #include "magicsquaremodel.h"
 
+
 int MagicSquareModel::rowCount(const QModelIndex &parent) const
 {
     return square.Rows();
@@ -24,20 +25,23 @@ QVariant MagicSquareModel::data (const QModelIndex &ind, int role) const
     return QVariant();
 }
 
-void MagicSquareModel::setSourceModel1(QAbstractItemModel *sourceModel1)
-{
-   /* m1 = sourceModel1;
+//void MagicSquareModel::setSourceModel1(QAbstractItemModel *sourceModel1)
+//{
+//   /* m1 = sourceModel1;
 
-    connect(m1, SIGNAL(dataChange(QModelIndex, QModelIndex)), this, SLOT(ChangeData(QModelIndex,QModelIndex)));*/
-}
+//    connect(m1, SIGNAL(dataChange(QModelIndex, QModelIndex)), this, SLOT(ChangeData(QModelIndex,QModelIndex)));*/
+//}
 
 bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, int role )
 {
     int row = index.row();
     int col = index.column();
 
-    if( role == Qt::DisplayRole || role == Qt::EditRole)
+    if( role == Qt::DisplayRole || role == Qt::EditRole){
          square.SetValue(row, col, value.toInt());
+         emit dataChanged(index, index);
+
+    }
 }
 
 Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
@@ -58,4 +62,9 @@ bool MagicSquareModel::Full(int n)
             return true;
         else return false;
     else return false;
+}
+
+int MagicSquareModel::ItemsCountModel()
+{
+    return square.ItemsCount();
 }

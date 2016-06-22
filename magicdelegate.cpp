@@ -50,4 +50,3 @@ void MagicDelegate::setModelData(QWidget *editor,
        if(value !=0)
            model->setData(index, value, Qt::EditRole);
 }
-

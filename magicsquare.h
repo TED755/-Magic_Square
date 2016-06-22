@@ -5,6 +5,7 @@
 #include <vector>
 #include <ctime>
 #include <QVariant>
+#include <QAbstractTableModel>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
     int check_num(int n);
     void Zero(int n);
     bool isFull(int n);
+    int ItemsCount();
 
     int Rows()const {return matrix.size();}
     int Cols()const {return matrix[0].size();}
@@ -37,6 +39,7 @@ public:
     }
 
     void SetValue (int row, int col, int value);
+    int Itcount = 0;
 
 
 private:

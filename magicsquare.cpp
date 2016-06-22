@@ -14,6 +14,7 @@ MagicSquare::MagicSquare(int n)
         BuildSquare_odd(n);
     else BuildSquare_even(n);
     matrixcheck = matrix;
+    Itcount = n;
 }
 
 
@@ -35,7 +36,7 @@ void MagicSquare::BuildSquare_odd(int n)
             else if (row < 0)
                 row += n;
         }
-    }    
+    }
 }
 
 
@@ -134,7 +135,7 @@ void MagicSquare::BuildSquare_even(int n)
                     column++;
                     matrix1[row][column] = count++;
                 }
-                count -= 1;
+                count--;
                 cwise = true;
             }
             sm += 2;
@@ -165,12 +166,12 @@ void MagicSquare::BuildSquare4(vector<vector<int> > &matrix1, int n)
             if(matrix1[i][j]!= 0)
                 matrix1[i-n][j] = matrix1[i][j];
         }
-        qDebug()<<"copiyng start";
-        int k;
-        for (i = n/2 - 1, k = 0; i < n + n/2 - 1; i++, k++)
-            for(j = 0; j < n; j++)
-                matrix[k][j] = matrix1[i][j];//копирование матрицы
-        qDebug()<<"copiyng finished";
+    qDebug()<<"copiyng start";
+    int k;
+    for (i = n/2 - 1, k = 0; i < n + n/2 - 1; i++, k++)
+        for(j = 0; j < n; j++)
+            matrix[k][j] = matrix1[i][j];//копирование матрицы
+    qDebug()<<"copiyng finished";
 }
 
 
@@ -186,12 +187,12 @@ void MagicSquare::BuildSquare6(vector<vector<int> > &matrix1, int n)
     for (i = 0; i < 2*n-2; i++)
         matrix2[i].resize(n);
     for(i = 1; i < n - 1; i++)
+    {
+        for(j = 1; j < n - 1; j++)
         {
-            for(j = 1; j < n - 1; j++)
-            {
-                matrix2[i][j] = matrix1[i + (n-2)/2 - 2][j-1] + 2*(n - 1);   // add 2*(n-1)
-            }
+            matrix2[i][j] = matrix1[i + (n-2)/2 - 2][j-1] + 2*(n - 1);   // add 2*(n-1)
         }
+    }
 
     matrix2[0][0] =  3*(n/2) - 1;
     matrix2[0][n-1] = 1;

@@ -1,23 +1,25 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QMenu>
+#include <QCursor>
 #include "mainwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-
     currentMode = Menu;
-    layout = new QVBoxLayout(this);
+    layout    = new QVBoxLayout(this);
     laylabel = new QHBoxLayout(this);
-    table = new QTableView(this);
-    start = new QPushButton(this);
-    end = new QPushButton(this);
-    str = new QLineEdit(this);
-    label = new QLabel(this);
-    label2 = new QLabel(this);
-    delegate = new MagicDelegate();
+    table   =  new QTableView(this);
+    start  = new QPushButton(this);
+    end   = new QPushButton(this);
+    str    =   new QLineEdit(this);
+    labelPN   =    new QLabel(this);
+    labelPT   =     new QLabel(this);
+    labelIN = new QLabel(this);
+    labelIT = new QLabel(this);
+    delegate  =   new MagicDelegate();
 
     table->setItemDelegate(delegate);
 
@@ -31,8 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
     connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
 
-    laylabel->addWidget(label2);
-    laylabel->addWidget(label);
+    laylabel->addWidget(labelPT);
+    laylabel->addWidget(labelPN);
+    laylabel->addWidget(labelIT);
+    laylabel->addWidget(labelIN);
 
     layout->addLayout(laylabel);
     layout->addWidget(str);
@@ -41,10 +45,13 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(end);
 
     end->hide();
-    label->hide();
-    label2->hide();
+    labelPN->hide();
+    labelPT->hide();
+    labelIN->hide();
+    labelIT->hide();
 
     connect(str, SIGNAL(textChanged(QString)), this, SLOT(TextChanged(QString)));
+
 }
 
 
@@ -56,6 +63,8 @@ void MainWindow::startg()
 
     currentMode = Game;
 
+
+
     start->hide();
     end->show();
 
@@ -63,17 +72,31 @@ void MainWindow::startg()
     int a = str->text().toInt();
 
     str->hide();
-    label2->setText("Порядок квадрата: ");
-    label->setNum((double)a);
-    label2->show();
-    label->show();
+
     delegate->SetMaxValue(a*a);
 
     model = new MagicSquareModel(a);
     model->insertColumns(0,a);
     model->insertRows(0, a);
 
+    //count = model->OneMoreitcount;
+
+    labelPT->setText("Порядок квадрата: ");
+    labelPN->setNum(a);
+    labelIT->setText("Осталось незаполненных ячеек: ");
+    labelIN->setNum(model->ItemsCountModel());
+
+
+    //labelIN->setNum(count);
+    labelPT->show();
+    labelPN->show();
+    labelIT->show();
+
     table->setModel(model);
+
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
+    labelIN->show();
+
     qDebug()<<"Build";    
 
 }
@@ -100,6 +123,11 @@ void MainWindow::TextChanged(QString str)
         start->setEnabled(!str.isEmpty());
     else start->setEnabled(false);
 
+}
+
+void MainWindow::ItemChanged()
+{
+    labelIN->setNum(model->ItemsCountModel());
 }
 
 MainWindow::~MainWindow()

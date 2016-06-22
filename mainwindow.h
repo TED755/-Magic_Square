@@ -30,8 +30,10 @@ public:
     QHBoxLayout* laylabel;
     QPushButton* start;
     QPushButton* end;
-    QLabel* label;
-    QLabel* label2;
+    QLabel* labelPN;//Показ порядка
+    QLabel* labelPT;//Информация о порядке
+    QLabel* labelIT;//показ оставшихся ячеек
+    QLabel* labelIN;//Информация
 
     enum Mod {Game, Menu};
     Mod currentMode;
@@ -41,7 +43,7 @@ private slots:
     void startg();
     void endg();
     void TextChanged(QString str);
-
+    void ItemChanged();
 private:
 
     MagicDelegate *delegate;

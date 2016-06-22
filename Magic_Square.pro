@@ -23,7 +23,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     magicsquare.h \
     magicsquaremodel.h \
-    magicdelegate.h \
-    check_square.h
+    magicdelegate.h
 
 FORMS +=
