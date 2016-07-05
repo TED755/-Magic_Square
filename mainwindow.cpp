@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
 /*menu*/
+
     currentMode = Menu;
     layout    = new QVBoxLayout(this);
     laylabel = new QHBoxLayout(this);
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     str    =   new QLineEdit(this);
     num = new QSpinBox(this);
     cmb = new QComboBox(this);
+
     labelPN   =    new QLabel(this);
     labelPT   =     new QLabel(this);
     labelIN = new QLabel(this);
@@ -32,17 +34,20 @@ MainWindow::MainWindow(QWidget *parent)
     table->setItemDelegate(delegate);
 
     labelcompl->setText("Complexity");
+    labelcompl->setBackgroundRole(QPalette::ColorRole(Qt::red));
     labelnum->setText("Number");
 
     num->setMinimum(3);
     num->setMaximum(1000);
 
-    //str->setDragEnabled(true);
+    lst << "Easy"<<"Medium"<<"Hard";
+    cmb->addItems(lst);
+    cmb->setEditable(false);
+
     str->hide();
 
     start->setText("Start game");
     start->setDefault(true);
-    //start->setEnabled(true);
     end->setText("End game");
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
@@ -63,10 +68,10 @@ MainWindow::MainWindow(QWidget *parent)
     laylabel->addWidget(labelIT);
     laylabel->addWidget(labelIN);
 
+    layout->addWidget(&mods);
     layout->addLayout(laylabel);
     layout->addLayout(main);
     layout->addWidget(table);
-    //layout->addWidget(start);
     layout->addWidget(end);
 
     table->hide();
@@ -89,19 +94,23 @@ void MainWindow::startg()
 
     currentMode = Game;
 
-
-
     start->hide();
     num->hide();
     cmb->hide();
     end->show();
     table->show();
+    mods.hide();
 
+    QPushButton* exit = new QPushButton("Exit");
+    connect(exit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
+    layout->addWidget(exit);
 
     int a = num->text().toInt();
 
     str->hide();
     num->hide();
+    labelcompl->hide();
+    labelnum->hide();
 
     delegate->SetMaxValue(a*a);
 
@@ -118,7 +127,13 @@ void MainWindow::startg()
     labelPN->show();
     labelIT->show();
 
+    QPalette pal = palette();
+    pal.setColor(backgroundRole(), QColor(Qt::yellow));
+
     table->setModel(model);
+    table->setPalette(pal);
+    table->setFrameStyle(100);
+    table->setGeometry(1000,10000,255,128);
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
     labelIN->show();
@@ -141,15 +156,15 @@ void MainWindow::endg()
     }
 }
 
-void MainWindow::TextChanged(QString str)
-{
-    int k = str.toInt();
+//void MainWindow::TextChanged(QString str)
+//{
+//    int k = str.toInt();
 
-    if(k > 2 && k < 5000)
-        start->setEnabled(!str.isEmpty());
-    else start->setEnabled(false);
+//    if(k > 2 && k < 5000)
+//        start->setEnabled(!str.isEmpty());
+//    else start->setEnabled(false);
 
-}
+//}
 
 void MainWindow::ItemChanged()
 {

@@ -18,11 +18,13 @@ SOURCES += main.cpp\
     functions.cpp \
     magicsquaremodel.cpp \
     magicdelegate.cpp \
-    check_square.cpp
+    check_square.cpp \
+    mods.cpp
 
 HEADERS  += mainwindow.h \
     magicsquare.h \
     magicsquaremodel.h \
-    magicdelegate.h
+    magicdelegate.h \
+    mods.h
 
 FORMS +=

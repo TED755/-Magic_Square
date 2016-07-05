@@ -12,8 +12,11 @@
 #include <QMenu>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QRadioButton>
+#include <QGroupBox>
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
+#include "mods.h"
 
 namespace Ui {
     class MainWindow;
@@ -26,13 +29,14 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    Mods mods;
     MagicSquareModel *model;
     QStandardItemModel* Startmodel;
     QTableView* table;
     QSpinBox* num;
     QComboBox* cmb;
     QLineEdit* str;
+    QStringList lst;
 
     QVBoxLayout* layout;
     QHBoxLayout* laylabel;
@@ -60,7 +64,7 @@ private slots:
 
     void startg();
     void endg();
-    void TextChanged(QString str);
+   // void TextChanged(QString str);
     void ItemChanged();
 private:
 
