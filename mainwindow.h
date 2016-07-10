@@ -35,7 +35,7 @@ public:
     QTableView* table;
     QSpinBox* num;
     QComboBox* cmb;
-    QLineEdit* str;
+    //QLineEdit* str;
     QStringList lst;
 
     QVBoxLayout* layout;
@@ -48,6 +48,8 @@ public:
 
     QPushButton* start;
     QPushButton* end;
+    QPushButton* exit;
+    QPushButton* menuex;
 
     QLabel* labelnum;
     QLabel* labelcompl;
@@ -62,9 +64,10 @@ public:
 
 private slots:
 
-    void startg();
+    void game();
+    void menu();
     void endg();
-   // void TextChanged(QString str);
+    void menuexs();
     void ItemChanged();
 private:
 

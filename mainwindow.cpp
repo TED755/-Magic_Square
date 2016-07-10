@@ -4,16 +4,18 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-/*menu*/
-
     currentMode = Menu;
+
     layout    = new QVBoxLayout(this);
     laylabel = new QHBoxLayout(this);
 
     table   =  new QTableView(this);
+
     start  = new QPushButton(this);
     end   = new QPushButton(this);
-    str    =   new QLineEdit(this);
+    exit = new QPushButton(this);
+    menuex = new QPushButton(this);
+
     num = new QSpinBox(this);
     cmb = new QComboBox(this);
 
@@ -34,24 +36,21 @@ MainWindow::MainWindow(QWidget *parent)
     table->setItemDelegate(delegate);
 
     labelcompl->setText("Complexity");
-    labelcompl->setBackgroundRole(QPalette::ColorRole(Qt::red));
     labelnum->setText("Number");
 
     num->setMinimum(3);
     num->setMaximum(1000);
 
+
     lst << "Easy"<<"Medium"<<"Hard";
     cmb->addItems(lst);
     cmb->setEditable(false);
 
-    str->hide();
-
-    start->setText("Start game");
+    start->setText("Начать");
     start->setDefault(true);
-    end->setText("End game");
-
-    connect(start, SIGNAL(clicked(bool)), this, SLOT(startg()));
-    connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
+    end->setText("Check Square");
+    exit->setText("Exit");
+    menuex->setText("Go to menu");
 
     laycompl->addWidget(labelcompl);
     laycompl->addWidget(cmb);
@@ -61,7 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     sun->addLayout(laynum);
     main->addLayout(sun);
     main->addWidget(start);
-
 
     laylabel->addWidget(labelPT);
     laylabel->addWidget(labelPN);
@@ -73,7 +71,22 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addLayout(main);
     layout->addWidget(table);
     layout->addWidget(end);
+    layout->addWidget(menuex);
+    layout->addWidget(exit);
 
+    connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
+    connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
+    connect(exit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
+    connect(menuex, SIGNAL(clicked(bool)), this, SLOT(menuexs()));
+
+    labelcompl->hide();
+    labelnum->hide();
+    num->hide();
+    cmb->hide();
+    start->hide();
+    menuex->hide();
+    exit->hide();
+    mods.hide();
     table->hide();
     end->hide();
     labelPN->hide();
@@ -81,14 +94,38 @@ MainWindow::MainWindow(QWidget *parent)
     labelIN->hide();
     labelIT->hide();
 
-    //connect(str, SIGNAL(textChanged(QString)), this, SLOT(TextChanged(QString)));
+    MainWindow::menu();
+}
+
+/*Menu*/
+void MainWindow::menu()
+{
+    qDebug()<<"In Menu";
+    table->hide();
+    end->hide();
+    labelPN->hide();
+    labelPT->hide();
+    labelIN->hide();
+    labelIT->hide();
+    menuex->hide();
+    if (currentMode == Game)
+        return;
+    currentMode = Menu;
+
+    start->show();
+    cmb->show();
+    num->show();
+    labelcompl->show();
+    labelnum->show();
+    exit->show();
+    mods.show();
 
 }
 
 /*game*/
-void MainWindow::startg()
+void MainWindow::game()
 {
-
+    qDebug()<<"In game";
     if(currentMode == Game)
         return;
 
@@ -98,16 +135,13 @@ void MainWindow::startg()
     num->hide();
     cmb->hide();
     end->show();
+    exit->show();
+    menuex->show();
     table->show();
     mods.hide();
 
-    QPushButton* exit = new QPushButton("Exit");
-    connect(exit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
-    layout->addWidget(exit);
-
     int a = num->text().toInt();
 
-    str->hide();
     num->hide();
     labelcompl->hide();
     labelnum->hide();
@@ -127,13 +161,13 @@ void MainWindow::startg()
     labelPN->show();
     labelIT->show();
 
-    QPalette pal = palette();
-    pal.setColor(backgroundRole(), QColor(Qt::yellow));
+//    QPalette pal = palette();
+//    pal.setColor(backgroundRole(), QColor(Qt::yellow));
 
     table->setModel(model);
-    table->setPalette(pal);
-    table->setFrameStyle(100);
-    table->setGeometry(1000,10000,255,128);
+    //table->setPalette(pal);
+    //table->setFrameStyle(100);
+    //table->setGeometry(1000,10000,255,128);
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
     labelIN->show();
@@ -148,7 +182,7 @@ void MainWindow::endg()
     if (model->Full(b)){
         QMessageBox::information(this, "YOU WIN!", "IT'S MAGIC");
         qDebug() << "It's working!";
-        window()->close();
+        MainWindow::menuexs();
     }
     else {
         QMessageBox::information(this, "Try again", "IT'S NOT MAGIC");
@@ -156,19 +190,16 @@ void MainWindow::endg()
     }
 }
 
-//void MainWindow::TextChanged(QString str)
-//{
-//    int k = str.toInt();
-
-//    if(k > 2 && k < 5000)
-//        start->setEnabled(!str.isEmpty());
-//    else start->setEnabled(false);
-
-//}
-
 void MainWindow::ItemChanged()
 {
     labelIN->setNum(model->ItemsCountModel());
+}
+
+void MainWindow::menuexs()
+{
+    qDebug()<<"clicked";
+    currentMode = Menu;
+    MainWindow::menu();
 }
 
 MainWindow::~MainWindow()
