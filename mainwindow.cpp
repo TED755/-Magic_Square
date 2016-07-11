@@ -6,6 +6,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     currentMode = Menu;
 
+
+    mmenubar = new QMenuBar(this);
+    mmenu = new QMenu("Меню", this);
+    mmenu->addAction("&Exit", qApp, SLOT(quit()));
+    mmenubar->addMenu(mmenu);
+
+
+
     layout    = new QVBoxLayout(this);
     laylabel = new QHBoxLayout(this);
 
@@ -33,24 +41,29 @@ MainWindow::MainWindow(QWidget *parent)
     labelnum = new QLabel(this);
     labelcompl = new QLabel(this);
 
+
+    QPalette pal = palette();
+        pal.setColor(backgroundRole(), QColor(Qt::darkGray));
+        table->setPalette(pal);
+
     table->setItemDelegate(delegate);
 
-    labelcompl->setText("Complexity");
-    labelnum->setText("Number");
+    labelcompl->setText("Уровень сложности");
+    labelnum->setText("Порядок");
 
     num->setMinimum(3);
     num->setMaximum(1000);
 
 
-    lst << "Easy"<<"Medium"<<"Hard";
+    lst << "Легко"<<"Средне"<<"Сложно";
     cmb->addItems(lst);
     cmb->setEditable(false);
 
     start->setText("Начать");
     start->setDefault(true);
-    end->setText("Check Square");
-    exit->setText("Exit");
-    menuex->setText("Go to menu");
+    end->setText("Проверить квадрат");
+    exit->setText("Выход");
+    menuex->setText("Выход в меню");
 
     laycompl->addWidget(labelcompl);
     laycompl->addWidget(cmb);
@@ -66,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
     laylabel->addWidget(labelIT);
     laylabel->addWidget(labelIN);
 
+    layout->addWidget(mmenubar);
     layout->addWidget(&mods);
     layout->addLayout(laylabel);
     layout->addLayout(main);
@@ -73,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(end);
     layout->addWidget(menuex);
     layout->addWidget(exit);
+
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
     connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
@@ -180,12 +195,12 @@ void MainWindow::endg()
 {
     int b = num->text().toInt();
     if (model->Full(b)){
-        QMessageBox::information(this, "YOU WIN!", "IT'S MAGIC");
+        QMessageBox::information(this, "Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
         qDebug() << "It's working!";
         MainWindow::menuexs();
     }
     else {
-        QMessageBox::information(this, "Try again", "IT'S NOT MAGIC");
+        QMessageBox::information(this, "Попробуйте еще раз", "Квадрат не магический");
         qDebug()<< "Not magic";
     }
 }

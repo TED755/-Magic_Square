@@ -10,9 +10,9 @@ MagicSquare::MagicSquare(int n)
     matrixcheck.resize(n);
     for (int i = 0; i < matrixcheck.size(); i++)
         matrixcheck[i].resize(n);
-    if (n % 2 != 0)
-        BuildSquare_odd(n);
-    else BuildSquare_even(n);
+
+    n % 2 != 0 ? BuildSquare_odd(n) : BuildSquare_even(n);
+
     matrixcheck = matrix;
     Itcount = n;
 }

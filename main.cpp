@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
 
 //    Light
 
-    QPalette pal(Qt::yellow);
+    /*QPalette pal(Qt::darkYellow)*/;
 
-    a.setPalette(pal);
+    //a.setPalette(pal);
 
     w.setGeometry(600, 200, 500, 400);
 

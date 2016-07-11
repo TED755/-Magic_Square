@@ -35,9 +35,12 @@ public:
     QTableView* table;
     QSpinBox* num;
     QComboBox* cmb;
-    //QLineEdit* str;
     QStringList lst;
 
+    QMenu* mmenu;
+    QMenuBar* mmenubar;
+
+    QHBoxLayout* menulayout;
     QVBoxLayout* layout;
     QHBoxLayout* laylabel;
 

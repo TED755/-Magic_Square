@@ -6,15 +6,19 @@
 MagicDelegate::MagicDelegate()
 {
 
-
 }
 
 void MagicDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(Qt::lightGray);
+    painter->setBrush(brush);
     if(index.data().toInt() == 0)
     {
-        painter->setPen(Qt::red);
+        painter->setPen(Qt::darkGray);
         painter->drawRect(QRect(option.rect.x() , option.rect.y() , 98, 28));
+
     }
     else
         QStyledItemDelegate::paint(painter, option,index);

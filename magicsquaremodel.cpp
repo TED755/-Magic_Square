@@ -38,10 +38,11 @@ bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, 
     int col = index.column();
 
     if( role == Qt::DisplayRole || role == Qt::EditRole){
-         square.SetValue(row, col, value.toInt());
-         emit dataChanged(index, index);
-
+        square.SetValue(row, col, value.toInt());
+        emit dataChanged(index, index);
+        return true;
     }
+    return false;
 }
 
 Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
