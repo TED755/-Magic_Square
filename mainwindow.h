@@ -29,30 +29,27 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Mods mods;
+    //Mods mods;
+
+
+    enum Mod {Game, Menu};
+    Mod currentMode;
+private:
     MagicSquareModel *model;
-    QStandardItemModel* Startmodel;
     QTableView* table;
     QSpinBox* num;
     QComboBox* cmb;
     QStringList lst;
 
-    QMenu* mmenu;
-    QMenuBar* mmenubar;
+    QMenuBar* mainMenu;
+    QMenu* file;
 
-    QHBoxLayout* menulayout;
-    QVBoxLayout* layout;
-    QHBoxLayout* laylabel;
-
-    QVBoxLayout* laynum;
-    QVBoxLayout* laycompl;
-    QHBoxLayout* sun;
-    QVBoxLayout* main;
+    QVBoxLayout* mainLayout;//Главная компоновка
+    QGridLayout* center;
+    QHBoxLayout* layout;
 
     QPushButton* start;
-    QPushButton* end;
-    QPushButton* exit;
-    QPushButton* menuex;
+    QPushButton* check;
 
     QLabel* labelnum;
     QLabel* labelcompl;
@@ -62,13 +59,16 @@ public:
     QLabel* labelIT;//показ оставшихся ячеек
     QLabel* labelIN;//Информация
 
-    enum Mod {Game, Menu};
-    Mod currentMode;
+    QLabel* labelmode;
+    QRadioButton* arcade;
+    QRadioButton* training;
+    void createLayouts();
+    void createMenu();
 
 private slots:
 
-    void game();
     void menu();
+    void game();    
     void endg();
     void menuexs();
     void ItemChanged();

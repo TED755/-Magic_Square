@@ -1,10 +1,9 @@
 #include "mods.h"
 #include "mainwindow.h"
 
-Mods::Mods(QWidget *pwgt) : QGroupBox("Режим", pwgt)
+Mods::Mods(QWidget *pwgt) : QGroupBox(pwgt)
 {
-    resize(100, 150);
-
+    setTitle("Режим");
     Training = new QRadioButton("Тренировка");
     Arcade = new QRadioButton("Аркада");
     Training->setChecked(true);
@@ -12,7 +11,7 @@ Mods::Mods(QWidget *pwgt) : QGroupBox("Режим", pwgt)
     connect(Training, SIGNAL(clicked()), SLOT(slotButtonClicked()));
     connect(Arcade, SIGNAL(clicked()), SLOT(slotButtonClicked()));
 
-    QVBoxLayout* pvbxLayout = new QVBoxLayout;
+    QHBoxLayout* pvbxLayout = new QHBoxLayout;
     pvbxLayout->addWidget(Training);
     pvbxLayout->addWidget(Arcade);
 

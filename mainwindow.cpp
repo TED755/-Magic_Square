@@ -6,23 +6,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     currentMode = Menu;
 
-
-    mmenubar = new QMenuBar(this);
-    mmenu = new QMenu("Меню", this);
-    mmenu->addAction("&Exit", qApp, SLOT(quit()));
-    mmenubar->addMenu(mmenu);
-
-
-
-    layout    = new QVBoxLayout(this);
-    laylabel = new QHBoxLayout(this);
-
     table   =  new QTableView(this);
 
     start  = new QPushButton(this);
-    end   = new QPushButton(this);
-    exit = new QPushButton(this);
-    menuex = new QPushButton(this);
+    check   = new QPushButton(this);
 
     num = new QSpinBox(this);
     cmb = new QComboBox(this);
@@ -31,16 +18,15 @@ MainWindow::MainWindow(QWidget *parent)
     labelPT   =     new QLabel(this);
     labelIN = new QLabel(this);
     labelIT = new QLabel(this);
-    delegate  =   new MagicDelegate();
 
-    laycompl = new QVBoxLayout(this);
-    laynum = new QVBoxLayout(this);
-    sun = new QHBoxLayout(this);
-    main = new QVBoxLayout(this);
+    delegate  =   new MagicDelegate();
 
     labelnum = new QLabel(this);
     labelcompl = new QLabel(this);
 
+    labelmode = new QLabel("Режим",this);
+    arcade = new QRadioButton("Аркада",this);
+    training = new QRadioButton("Тренировка", this);
 
     QPalette pal = palette();
         pal.setColor(backgroundRole(), QColor(Qt::darkGray));
@@ -49,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     table->setItemDelegate(delegate);
 
     labelcompl->setText("Уровень сложности");
-    labelnum->setText("Порядок");
+    labelnum->setText("Порядок квадрата");
 
     num->setMinimum(3);
     num->setMaximum(1000);
@@ -61,53 +47,28 @@ MainWindow::MainWindow(QWidget *parent)
 
     start->setText("Начать");
     start->setDefault(true);
-    end->setText("Проверить квадрат");
-    exit->setText("Выход");
-    menuex->setText("Выход в меню");
+    check->setText("Проверить квадрат");
 
-    laycompl->addWidget(labelcompl);
-    laycompl->addWidget(cmb);
-    laynum->addWidget(labelnum);
-    laynum->addWidget(num);
-    sun->addLayout(laycompl);
-    sun->addLayout(laynum);
-    main->addLayout(sun);
-    main->addWidget(start);
-
-    laylabel->addWidget(labelPT);
-    laylabel->addWidget(labelPN);
-    laylabel->addWidget(labelIT);
-    laylabel->addWidget(labelIN);
-
-    layout->addWidget(mmenubar);
-    layout->addWidget(&mods);
-    layout->addLayout(laylabel);
-    layout->addLayout(main);
-    layout->addWidget(table);
-    layout->addWidget(end);
-    layout->addWidget(menuex);
-    layout->addWidget(exit);
-
+    createLayouts();
+    createMenu();
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
-    connect(end, SIGNAL(clicked(bool)),this, SLOT(endg()));
-    connect(exit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
-    connect(menuex, SIGNAL(clicked(bool)), this, SLOT(menuexs()));
+    connect(check, SIGNAL(clicked(bool)),this, SLOT(endg()));
 
     labelcompl->hide();
     labelnum->hide();
     num->hide();
     cmb->hide();
     start->hide();
-    menuex->hide();
-    exit->hide();
-    mods.hide();
     table->hide();
-    end->hide();
+    check->hide();
     labelPN->hide();
     labelPT->hide();
     labelIN->hide();
     labelIT->hide();
+    labelmode->hide();
+    arcade->hide();
+    training->hide();
 
     MainWindow::menu();
 }
@@ -117,12 +78,11 @@ void MainWindow::menu()
 {
     qDebug()<<"In Menu";
     table->hide();
-    end->hide();
+    check->hide();
     labelPN->hide();
     labelPT->hide();
     labelIN->hide();
     labelIT->hide();
-    menuex->hide();
     if (currentMode == Game)
         return;
     currentMode = Menu;
@@ -132,8 +92,9 @@ void MainWindow::menu()
     num->show();
     labelcompl->show();
     labelnum->show();
-    exit->show();
-    mods.show();
+    labelmode->show();
+    arcade->show();
+    training->show();
 
 }
 
@@ -149,11 +110,11 @@ void MainWindow::game()
     start->hide();
     num->hide();
     cmb->hide();
-    end->show();
-    exit->show();
-    menuex->show();
+    labelmode->hide();
+    arcade->hide();
+    training->hide();
+    check->show();
     table->show();
-    mods.hide();
 
     int a = num->text().toInt();
 
@@ -176,13 +137,7 @@ void MainWindow::game()
     labelPN->show();
     labelIT->show();
 
-//    QPalette pal = palette();
-//    pal.setColor(backgroundRole(), QColor(Qt::yellow));
-
     table->setModel(model);
-    //table->setPalette(pal);
-    //table->setFrameStyle(100);
-    //table->setGeometry(1000,10000,255,128);
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
     labelIN->show();
@@ -203,6 +158,44 @@ void MainWindow::endg()
         QMessageBox::information(this, "Попробуйте еще раз", "Квадрат не магический");
         qDebug()<< "Not magic";
     }
+}
+
+void MainWindow::createLayouts()
+{
+    mainLayout = new QVBoxLayout(this);
+    layout = new QHBoxLayout(this);
+    center = new QGridLayout(this);
+
+    center->addWidget(labelcompl, 1, 1, Qt::AlignCenter);
+    center->addWidget(cmb, 2, 1, Qt::AlignCenter);
+    center->addWidget(labelnum, 1, 2, Qt::AlignCenter);
+    center->addWidget(num, 2, 2, Qt::AlignCenter);
+    center->addWidget(labelmode, 3, 1, 1, 2, Qt::AlignCenter);
+    center->addWidget(training, 4, 1, Qt::AlignCenter);
+    center->addWidget(arcade, 4, 2, Qt::AlignCenter);
+
+    layout->addWidget(labelPT);
+    layout->addWidget(labelPN);
+    layout->addWidget(labelIT);
+    layout->addWidget(labelIN);
+
+    mainLayout->addLayout(layout);
+    mainLayout->addLayout(center);
+    mainLayout->addWidget(start);
+    mainLayout->addWidget(table);
+    mainLayout->addWidget(check);
+}
+
+void MainWindow::createMenu()
+{
+    mainMenu = new QMenuBar(this);
+    file = new QMenu("&Меню",this);
+
+    mainMenu->addMenu(file);
+
+    file->addAction("&Выход", qApp, SLOT(quit()));
+
+    mainLayout->setMenuBar(mainMenu);
 }
 
 void MainWindow::ItemChanged()
