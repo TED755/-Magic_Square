@@ -40,11 +40,14 @@ public:
 
     void SetValue (int row, int col, int value);
     int Itcount = 0;
+    QList<QPair <int, int>> saveposition;
+    QPair<int, int> save;
 
 
 private:
-    vector < vector <int> > matrix;
-    vector < vector <int> > matrixcheck;
+    vector<vector<int>> matrix;
+    vector<vector<int>> matrixcheck;
+
 
 };
 

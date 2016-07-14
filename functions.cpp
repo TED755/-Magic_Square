@@ -4,8 +4,7 @@
 
 void MagicSquare::Zero(int n)
 {
-   QList<QPair<int, int> > indexies ;//= new QList<QPair<int, int> >();
-   //QList<QPair <int, int> > saveposition;
+   QList<QPair<int, int>> indexies;
 
    for(int i = 0; i < n; i++)
        for(int j = 0; j < n; j++)
@@ -22,24 +21,39 @@ void MagicSquare::Zero(int n)
         randomInd = rand() % indexies.size();
         ind = indexies[randomInd];
         matrix[ind.first][ind.second] = 0;
+        save = ind;
+
+        saveposition.push_back(save);
 
         x--;
-
         indexies.removeAt(randomInd);
     }
+    for (int i = 0; i < matrix.size(); i++)
+        for(int j = 0; j < matrix.size(); j++)
+            if(matrix[i][j] == 0)
+                Itcount++;
+    qDebug()<<saveposition;
 }
 
 void MagicSquare::SetValue(int row, int col, int value)
 {
-    if(row >= 0 && row < matrix.size()
-            && col >=0 && col <  matrix[0].size())
-        if (value == matrixcheck[row][col]){
-            matrix[row][col] = value;
-            Itcount--;
-        }
 
-    else
-        return;
+    if(row >= 0 && row < matrix.size()
+            && col >=0 && col <  matrix[0].size()){
+        Itcount *= 0;
+        for (int i = 0; i < matrix.size(); i++)
+            for(int j = 0; j < matrix.size(); j++)
+                if(matrix[i][j] == 0)
+                    Itcount++;
+
+        //       if (value == matrixcheck[row][col]){
+        matrix[row][col] = value;
+                    Itcount--;
+    }
+    //       }
+
+    //else
+    //   return;
 }
 
 bool MagicSquare::isFull(int n)

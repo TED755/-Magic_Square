@@ -25,13 +25,6 @@ QVariant MagicSquareModel::data (const QModelIndex &ind, int role) const
     return QVariant();
 }
 
-//void MagicSquareModel::setSourceModel1(QAbstractItemModel *sourceModel1)
-//{
-//   /* m1 = sourceModel1;
-
-//    connect(m1, SIGNAL(dataChange(QModelIndex, QModelIndex)), this, SLOT(ChangeData(QModelIndex,QModelIndex)));*/
-//}
-
 bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, int role )
 {
     int row = index.row();

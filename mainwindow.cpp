@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     labelmode = new QLabel("Режим",this);
     arcade = new QRadioButton("Аркада",this);
     training = new QRadioButton("Тренировка", this);
+    training->setChecked(true);
 
     QPalette pal = palette();
         pal.setColor(backgroundRole(), QColor(Qt::darkGray));
@@ -193,7 +194,8 @@ void MainWindow::createMenu()
 
     mainMenu->addMenu(file);
 
-    file->addAction("&Выход", qApp, SLOT(quit()));
+    file->addAction("Выход в меню", this, SLOT(menuexs()));
+    file->addAction("Выход из игры", qApp, SLOT(quit()));
 
     mainLayout->setMenuBar(mainMenu);
 }

@@ -14,7 +14,7 @@ MagicSquare::MagicSquare(int n)
     n % 2 != 0 ? BuildSquare_odd(n) : BuildSquare_even(n);
 
     matrixcheck = matrix;
-    Itcount = n;
+    Itcount = 0;
 }
 
 
