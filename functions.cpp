@@ -21,9 +21,9 @@ void MagicSquare::Zero(int n)
         randomInd = rand() % indexies.size();
         ind = indexies[randomInd];
         matrix[ind.first][ind.second] = 0;
-        save = ind;
+        //save = ind;
 
-        saveposition.push_back(save);
+        saveposition.push_back(ind);
 
         x--;
         indexies.removeAt(randomInd);

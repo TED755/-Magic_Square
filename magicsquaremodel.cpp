@@ -43,10 +43,14 @@ Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
     if(!index.isValid())
         return 0;
 
-    if( index.data() != 0) //TODO: create list af unlocked (equal to 0 at start) indexies (pair row, col)
-        return QAbstractItemModel::flags(index);
+    /*if(index.data() != 0)*/ //TODO: create list af unlocked (equal to 0 at start) indexies (pair row, col)
+        //return QAbstractItemModel::flags(index);
+    for (int i = 0; i < square.saveposition.size(); i++)
+        if (index.row() == square.saveposition[i].first && index.column() == square.saveposition[i].second){
+            return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+            }
 
-    return  Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+    return Qt::ItemIsEnabled | QAbstractItemModel::flags(index);
 }
 
 bool MagicSquareModel::Full(int n)
