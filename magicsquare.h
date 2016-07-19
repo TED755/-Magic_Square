@@ -13,7 +13,7 @@ class MagicSquare
 {
 
 public:
-    MagicSquare(int n);
+    MagicSquare(int n, int c);
     void BuildSquare_odd(int n);
     void BuildSquare_even(int n);
     void BuildSquare4(vector<vector<int> > &matrix1, int n);
@@ -39,7 +39,8 @@ public:
     }
 
     void SetValue (int row, int col, int value);
-    int Itcount = 0;
+    int itcount = 0;
+    int complexity;
     QList<QPair <int, int>> saveposition;
     QPair<int, int> save;
 

@@ -1,21 +1,9 @@
 #include "mainwindow.h"
-#include <QPalette>
-//#include "magicsquare.h"
-
-
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-
-//    int Light;
-
-//    Light
-
-    /*QPalette pal(Qt::darkYellow)*/;
-
-    //a.setPalette(pal);
 
     w.setGeometry(600, 200, 500, 400);
 
@@ -23,3 +11,7 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+/*==========================ПЛАН===========================
+ * Реализовать undo/redo/начать сначала
+ * Написать режимы
+ * +доплнительно: исправление бага с счетчиком незаполненных ячеек; поправить интерфейс таблицы*/

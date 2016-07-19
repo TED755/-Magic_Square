@@ -1,19 +1,41 @@
 #include "magicsquare.h"
 #include <QDebug>
 #include <QList>
+#include <cmath>
 
 void MagicSquare::Zero(int n)
 {
    QList<QPair<int, int>> indexies;
 
+   int x;
+   switch (complexity) {
+   case 1:{
+       qDebug()<<"Уровень сложности: 1";
+       x = n;
+       qDebug()<< x;
+       break;
+   }
+   case 2:{
+       qDebug()<<"Уровень сложности: 2";
+       x = n + n*0.5;
+       break;
+   }
+   case 3:{
+       qDebug()<<"Уровень сложности: 3";
+       x = n + n*0.9;
+       break;
+   }
+   default:
+       break;
+   }
    for(int i = 0; i < n; i++)
        for(int j = 0; j < n; j++)
        {
            indexies.push_back( QPair<int, int>(i,j));
        }
 
-    int x = n;
-    int randomInd;
+
+    int randomInd;//   int x = n;
     QPair<int, int> ind;
     srand(time(NULL));
     while (x > 0 && indexies.size() > 0){
@@ -21,7 +43,6 @@ void MagicSquare::Zero(int n)
         randomInd = rand() % indexies.size();
         ind = indexies[randomInd];
         matrix[ind.first][ind.second] = 0;
-        //save = ind;
 
         saveposition.push_back(ind);
 
@@ -31,7 +52,7 @@ void MagicSquare::Zero(int n)
     for (int i = 0; i < matrix.size(); i++)
         for(int j = 0; j < matrix.size(); j++)
             if(matrix[i][j] == 0)
-                Itcount++;
+                itcount++;
     qDebug()<<saveposition;
 }
 
@@ -40,15 +61,15 @@ void MagicSquare::SetValue(int row, int col, int value)
 
     if(row >= 0 && row < matrix.size()
             && col >=0 && col <  matrix[0].size()){
-        Itcount *= 0;
+        itcount *= 0;
         for (int i = 0; i < matrix.size(); i++)
             for(int j = 0; j < matrix.size(); j++)
                 if(matrix[i][j] == 0)
-                    Itcount++;
+                    itcount++;
 
         //       if (value == matrixcheck[row][col]){
         matrix[row][col] = value;
-                    Itcount--;
+                    itcount--;
     }
     //       }
 
@@ -74,5 +95,6 @@ bool MagicSquare::isFull(int n)
 
 int MagicSquare::ItemsCount()
 {
-    return Itcount;
+    return itcount;
 }
+

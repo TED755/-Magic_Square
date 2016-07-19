@@ -14,9 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     num = new QSpinBox(this);
     cmb = new QComboBox(this);
 
-    labelPN   =    new QLabel(this);
     labelPT   =     new QLabel(this);
-    labelIN = new QLabel(this);
     labelIT = new QLabel(this);
 
     delegate  =   new MagicDelegate();
@@ -63,9 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     start->hide();
     table->hide();
     check->hide();
-    labelPN->hide();
     labelPT->hide();
-    labelIN->hide();
     labelIT->hide();
     labelmode->hide();
     arcade->hide();
@@ -80,9 +76,7 @@ void MainWindow::menu()
     qDebug()<<"In Menu";
     table->hide();
     check->hide();
-    labelPN->hide();
     labelPT->hide();
-    labelIN->hide();
     labelIT->hide();
     if (currentMode == Game)
         return;
@@ -118,6 +112,13 @@ void MainWindow::game()
     table->show();
 
     int a = num->text().toInt();
+    int c = 0;
+    if(cmb->currentText() == "Легко")
+        c = 1;
+    else if(cmb->currentText() == "Средне")
+        c = 2;
+    else c = 3;
+
 
     num->hide();
     labelcompl->hide();
@@ -125,23 +126,20 @@ void MainWindow::game()
 
     delegate->SetMaxValue(a*a);
 
-    model = new MagicSquareModel(a);
+    model = new MagicSquareModel(a, c);
     model->insertColumns(0,a);
     model->insertRows(0, a);
 
-    labelPT->setText("Порядок квадрата: ");
-    labelPN->setNum(a);
-    labelIT->setText("Осталось незаполненных ячеек: ");
-    labelIN->setNum(model->ItemsCountModel());
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
+
+    labelPT->setText("Порядок квадрата: " + QString::number(a));
+    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+
 
     labelPT->show();
-    labelPN->show();
     labelIT->show();
 
     table->setModel(model);
-
-    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
-    labelIN->show();
 
     qDebug()<<"Build";    
 
@@ -149,8 +147,8 @@ void MainWindow::game()
 
 void MainWindow::endg()
 {
-    int b = num->text().toInt();
-    if (model->Full(b)){
+    int a = num->text().toInt();
+    if (model->Full(a)){
         QMessageBox::information(this, "Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
         qDebug() << "It's working!";
         MainWindow::menuexs();
@@ -176,9 +174,7 @@ void MainWindow::createLayouts()
     center->addWidget(arcade, 4, 2, Qt::AlignCenter);
 
     layout->addWidget(labelPT);
-    layout->addWidget(labelPN);
     layout->addWidget(labelIT);
-    layout->addWidget(labelIN);
 
     mainLayout->addLayout(layout);
     mainLayout->addLayout(center);
@@ -194,15 +190,15 @@ void MainWindow::createMenu()
 
     mainMenu->addMenu(file);
 
-    file->addAction("Выход в меню", this, SLOT(menuexs()));
-    file->addAction("Выход из игры", qApp, SLOT(quit()));
+    file->addAction("Выйти в меню", this, SLOT(menuexs()));
+    file->addAction("Выйти из игры", qApp, SLOT(quit()));
 
     mainLayout->setMenuBar(mainMenu);
 }
 
 void MainWindow::ItemChanged()
 {
-    labelIN->setNum(model->ItemsCountModel());
+    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
 }
 
 void MainWindow::menuexs()

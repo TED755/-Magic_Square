@@ -11,9 +11,9 @@ private:
 
 
 public:
-    MagicSquareModel(int n) : square(n)
+    MagicSquareModel(int n, int c) : square(n, c)
     {
-        square.Zero(n);
+        //square.Zero(n);
 
     }
 

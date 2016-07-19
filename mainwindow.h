@@ -18,10 +18,6 @@
 #include "magicdelegate.h"
 #include "mods.h"
 
-namespace Ui {
-    class MainWindow;
-}
-
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -32,11 +28,13 @@ public:
     //Mods mods;
 
 
-    enum Mod {Game, Menu};
-    Mod currentMode;
+    enum MenuMod {Game, Menu};
+    MenuMod currentMode;
+
 private:
     MagicSquareModel *model;
     QTableView* table;
+
     QSpinBox* num;
     QComboBox* cmb;
     QStringList lst;
@@ -54,10 +52,8 @@ private:
     QLabel* labelnum;
     QLabel* labelcompl;
 
-    QLabel* labelPN;//Показ порядка
     QLabel* labelPT;//Информация о порядке
     QLabel* labelIT;//показ оставшихся ячеек
-    QLabel* labelIN;//Информация
 
     QLabel* labelmode;
     QRadioButton* arcade;

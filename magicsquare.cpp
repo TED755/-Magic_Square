@@ -1,7 +1,7 @@
 #include "magicsquare.h"
 #include "QDebug"
 
-MagicSquare::MagicSquare(int n)
+MagicSquare::MagicSquare(int n, int c)
 {
     srand(time(NULL));
     matrix.resize(n);
@@ -14,7 +14,8 @@ MagicSquare::MagicSquare(int n)
     n % 2 != 0 ? BuildSquare_odd(n) : BuildSquare_even(n);
 
     matrixcheck = matrix;
-    Itcount = 0;
+    itcount = 0;
+    complexity = c;
 }
 
 
@@ -166,12 +167,12 @@ void MagicSquare::BuildSquare4(vector<vector<int> > &matrix1, int n)
             if(matrix1[i][j]!= 0)
                 matrix1[i-n][j] = matrix1[i][j];
         }
-    qDebug()<<"copiyng start";
+    qDebug()<<"copying start";
     int k;
     for (i = n/2 - 1, k = 0; i < n + n/2 - 1; i++, k++)
         for(j = 0; j < n; j++)
             matrix[k][j] = matrix1[i][j];//копирование матрицы
-    qDebug()<<"copiyng finished";
+    qDebug()<<"copying finished";
 }
 
 
