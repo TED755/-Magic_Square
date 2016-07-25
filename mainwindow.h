@@ -25,8 +25,6 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    //Mods mods;
-
 
     enum MenuMod {Game, Menu};
     MenuMod currentMode;
@@ -68,6 +66,7 @@ private slots:
     void endg();
     void menuexs();
     void ItemChanged();
+    void inputInformation();
 private:
 
     MagicDelegate *delegate;

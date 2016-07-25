@@ -6,6 +6,9 @@
 #include <ctime>
 #include <QVariant>
 #include <QAbstractTableModel>
+#include <QDebug>
+#include <QList>
+#include <cmath>
 
 using namespace std;
 
@@ -19,6 +22,7 @@ public:
     void BuildSquare4(vector<vector<int> > &matrix1, int n);
     void BuildSquare6(vector<vector<int> > &matrix1, int n);
     bool CheckSquare(int n);
+    bool CheckValue(int row, int col);
     int check_sum(int n);
     int check_num(int n);
     void Zero(int n);
@@ -35,7 +39,7 @@ public:
             return QVariant(matrix.at(row).at( col));
 
         else
-                    return QVariant();
+            return QVariant();
     }
 
     void SetValue (int row, int col, int value);
@@ -48,7 +52,6 @@ public:
 private:
     vector<vector<int>> matrix;
     vector<vector<int>> matrixcheck;
-
 
 };
 

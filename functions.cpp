@@ -1,7 +1,4 @@
 #include "magicsquare.h"
-#include <QDebug>
-#include <QList>
-#include <cmath>
 
 void MagicSquare::Zero(int n)
 {
@@ -35,9 +32,10 @@ void MagicSquare::Zero(int n)
        }
 
 
-    int randomInd;//   int x = n;
+    int randomInd;
     QPair<int, int> ind;
     srand(time(NULL));
+
     while (x > 0 && indexies.size() > 0){
 
         randomInd = rand() % indexies.size();
@@ -58,23 +56,39 @@ void MagicSquare::Zero(int n)
 
 void MagicSquare::SetValue(int row, int col, int value)
 {
+    int count;
 
     if(row >= 0 && row < matrix.size()
             && col >=0 && col <  matrix[0].size()){
-        itcount *= 0;
+        //itcount *= 0;
+        //        for (int i = 0; i < matrix.size(); i++)
+        //            for(int j = 0; j < matrix.size(); j++)
+        //               if(matrix[i][j] == 0)
+        //                    itcount++;
+
+
+        matrix[row][col] = value;
         for (int i = 0; i < matrix.size(); i++)
             for(int j = 0; j < matrix.size(); j++)
-                if(matrix[i][j] == 0)
-                    itcount++;
+               if(matrix[i][j] == 0)
+                    count++;
+        itcount = count;
+        count = 0;
+        //itcount--;
 
-        //       if (value == matrixcheck[row][col]){
-        matrix[row][col] = value;
-                    itcount--;
     }
     //       }
 
     //else
     //   return;
+}
+
+bool MagicSquare::CheckValue(int row, int col)
+{
+    if(matrix[row][col] == matrixcheck[row][col])
+        return true;
+    else
+        return false;
 }
 
 bool MagicSquare::isFull(int n)

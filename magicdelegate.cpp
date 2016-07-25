@@ -1,7 +1,5 @@
 #include "magicdelegate.h"
 #include "magicsquare.h"
-#include <QSpinBox>
-#include <QDebug>
 
 MagicDelegate::MagicDelegate()
 {

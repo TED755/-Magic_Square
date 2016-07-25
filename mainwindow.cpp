@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     table   =  new QTableView(this);
 
-    start  = new QPushButton(this);
-    check   = new QPushButton(this);
+    start  = new QPushButton("&Начать игру", this);
+    check   = new QPushButton("&Проверить квадрат", this);
 
     num = new QSpinBox(this);
     cmb = new QComboBox(this);
@@ -19,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     delegate  =   new MagicDelegate();
 
-    labelnum = new QLabel(this);
-    labelcompl = new QLabel(this);
+    labelnum = new QLabel("Порядок квадрата",this);
+    labelcompl = new QLabel("Уровень сложности", this);
 
     labelmode = new QLabel("Режим",this);
     arcade = new QRadioButton("Аркада",this);
@@ -33,8 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     table->setItemDelegate(delegate);
 
-    labelcompl->setText("Уровень сложности");
-    labelnum->setText("Порядок квадрата");
+    connect(table, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(inputInformation()));
 
     num->setMinimum(3);
     num->setMaximum(1000);
@@ -44,9 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     cmb->addItems(lst);
     cmb->setEditable(false);
 
-    start->setText("Начать");
     start->setDefault(true);
-    check->setText("Проверить квадрат");
 
     createLayouts();
     createMenu();
@@ -131,6 +128,7 @@ void MainWindow::game()
     model->insertRows(0, a);
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
+    //connect(model, SIGNAL())
 
     labelPT->setText("Порядок квадрата: " + QString::number(a));
     labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
@@ -199,6 +197,17 @@ void MainWindow::createMenu()
 void MainWindow::ItemChanged()
 {
     labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+
+}
+
+void MainWindow::inputInformation()
+{
+    if(model->flag){
+        QMessageBox::information(this, "Информация", "Число введено верно");
+
+    }
+    else
+        QMessageBox::information(this, "Информация", "Число введено неверно");
 }
 
 void MainWindow::menuexs()

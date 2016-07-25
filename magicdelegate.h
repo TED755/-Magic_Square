@@ -3,6 +3,7 @@
 
 #include <QStyledItemDelegate>
 #include <QPainter>
+#include <QSpinBox>
 
 
 class MagicDelegate : public QStyledItemDelegate

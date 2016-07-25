@@ -27,14 +27,23 @@ QVariant MagicSquareModel::data (const QModelIndex &ind, int role) const
 
 bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, int role )
 {
+    flag = false;
+    qDebug()<<"flag1: "<<flag;
     int row = index.row();
     int col = index.column();
 
     if( role == Qt::DisplayRole || role == Qt::EditRole){
         square.SetValue(row, col, value.toInt());
+        if(square.CheckValue(row, col) == true){
+            flag = true;
+            //square.itcount--;
+            qDebug()<<"flag2: "<<flag;
+        }
         emit dataChanged(index, index);
+        qDebug()<<"flag3: "<<flag;
         return true;
     }
+
     return false;
 }
 
@@ -43,8 +52,6 @@ Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
     if(!index.isValid())
         return 0;
 
-    /*if(index.data() != 0)*/ //TODO: create list af unlocked (equal to 0 at start) indexies (pair row, col)
-        //return QAbstractItemModel::flags(index);
     for (int i = 0; i < square.saveposition.size(); i++)
         if (index.row() == square.saveposition[i].first && index.column() == square.saveposition[i].second){
             return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
@@ -65,4 +72,7 @@ bool MagicSquareModel::Full(int n)
 int MagicSquareModel::ItemsCountModel()
 {
     return square.ItemsCount();
+
 }
+
+

@@ -13,8 +13,7 @@ private:
 public:
     MagicSquareModel(int n, int c) : square(n, c)
     {
-        //square.Zero(n);
-
+        square.Zero(n);
     }
 
     bool Full (int n);
@@ -26,6 +25,8 @@ public:
     QVariant data (const QModelIndex &ind, int role = Qt::DisplayRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole)override;
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+
+    bool flag = 1;
 
 };
 
