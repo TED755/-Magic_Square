@@ -4,7 +4,7 @@ void MagicSquare::Zero(int n)
 {
    QList<QPair<int, int>> indexies;
 
-   int x;
+   int x = 0;
    switch (complexity) {
    case 1:{
        qDebug()<<"Уровень сложности: 1";
@@ -56,7 +56,7 @@ void MagicSquare::Zero(int n)
 
 void MagicSquare::SetValue(int row, int col, int value)
 {
-    int count;
+    int count = 0;
 
     if(row >= 0 && row < matrix.size()
             && col >=0 && col <  matrix[0].size()){

@@ -5,7 +5,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
     currentMode = Menu;
-    gamemode = Training;
 
     table   =  new QTableView(this);
 
@@ -67,7 +66,6 @@ MainWindow::MainWindow(QWidget *parent)
     arcade->hide();
     training->hide();
 
-
     MainWindow::menu();
 }
 
@@ -75,7 +73,6 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     qDebug()<<"In Menu";
-
 
     table->hide();
     check->hide();
@@ -99,77 +96,25 @@ void MainWindow::menu()
 /*game*/
 void MainWindow::game()
 {
-    qDebug()<<"In game";
-    switch(gamemode){
-    case Training: TrainingGame(); break;
-    case Arcade: ArcadeGame(); break;
-    default: break;
+    switch (gamemode) {
+    case Training:
+        TrainingGame();
+        break;
+    case Arcade:
+        ArcadeGame();
+        break;
+    default:
+        break;
     }
-//    if(currentMode == Game)
-//        return;
-
-//    currentMode = Game;
-
-//    start->hide();
-//    num->hide();
-//    cmb->hide();
-//    labelmode->hide();
-//    arcade->hide();
-//    training->hide();
-//    check->show();
-//    table->show();
-
-//    int a = num->text().toInt();
-//    int c = 0;
-//    if(cmb->currentText() == "Легко")
-//        c = 1;
-//    else if(cmb->currentText() == "Средне")
-//        c = 2;
-//    else c = 3;
-
-
-//    num->hide();
-//    labelcompl->hide();
-//    labelnum->hide();
-
-//    delegate->SetMaxValue(a*a);
-
-//    model = new MagicSquareModel(a, c);
-//    model->insertColumns(0,a);
-//    model->insertRows(0, a);
-
-//    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
-
-//    labelPT->setText("Порядок квадрата: " + QString::number(a));
-//    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
-
-
-//    labelPT->show();
-//    labelIT->show();
-
-//    table->setModel(model);
-
-//    qDebug()<<"Build";
 
 }
-
-void MainWindow::TrainingGame()
-{
-    QMessageBox::information(this, "Oops", "Training mode is still in development =)");
-}
-
-void MainWindow::ArcadeGame()
-{
-    QMessageBox::information(this, "Oops", "Arcade mode is still in development =)");
-}
-
 
 void MainWindow::endg()
 {
     int a = num->text().toInt();
     if (model->Full(a)){
         QMessageBox::information(this, "Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
-        qDebug() << "Magic";
+        qDebug() << "It's working!";
         MainWindow::menuexs();
     }
     else {
@@ -185,6 +130,64 @@ void MainWindow::arcadeMode()
 void MainWindow::trainingMode()
 {
     gamemode = Training;
+}
+
+void MainWindow::TrainingGame()
+{
+    //QMessageBox::information(this, "Oops^^", "Training mode is still in development=)");
+    qDebug()<<"In game";
+    if(currentMode == Game)
+        return;
+
+    currentMode = Game;
+
+    start->hide();
+    num->hide();
+    cmb->hide();
+    labelmode->hide();
+    arcade->hide();
+    training->hide();
+    check->show();
+    table->show();
+
+    int a = num->text().toInt();
+    int c = 0;
+    if(cmb->currentText() == "Легко")
+        c = 1;
+    else if(cmb->currentText() == "Средне")
+        c = 2;
+    else c = 3;
+
+
+    num->hide();
+    labelcompl->hide();
+    labelnum->hide();
+
+    delegate->SetMaxValue(a*a);
+
+    model = new MagicSquareModel(a, c);
+    model->insertColumns(0,a);
+    model->insertRows(0, a);
+
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
+
+    labelPT->setText("Порядок квадрата: " + QString::number(a));
+    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+    qDebug()<<model->ItemsCountModel();
+
+
+    labelPT->show();
+    labelIT->show();
+
+    table->setModel(model);
+
+    qDebug()<<"Build";
+
+}
+
+void MainWindow::ArcadeGame()
+{
+    QMessageBox::information(this, "Oops^^", "Arcade mode is still in development=)");
 }
 
 void MainWindow::createLayouts()
@@ -227,6 +230,7 @@ void MainWindow::createMenu()
 void MainWindow::ItemChanged()
 {
     labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+    qDebug()<<model->ItemsCountModel();
 
 }
 
@@ -242,6 +246,7 @@ void MainWindow::inputInformation()
 
 void MainWindow::menuexs()
 {
+    qDebug()<<"clicked";
     currentMode = Menu;
     MainWindow::menu();
 }
