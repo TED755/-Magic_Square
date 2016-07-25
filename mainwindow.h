@@ -29,6 +29,9 @@ public:
     enum MenuMod {Game, Menu};
     MenuMod currentMode;
 
+    enum GameMode {Training, Arcade};
+    GameMode gamemode;
+
 private:
     MagicSquareModel *model;
     QTableView* table;
@@ -56,6 +59,7 @@ private:
     QLabel* labelmode;
     QRadioButton* arcade;
     QRadioButton* training;
+
     void createLayouts();
     void createMenu();
 
@@ -67,6 +71,11 @@ private slots:
     void menuexs();
     void ItemChanged();
     void inputInformation();
+    void arcadeMode();
+    void trainingMode();
+
+    void TrainingGame();
+    void ArcadeGame();
 private:
 
     MagicDelegate *delegate;

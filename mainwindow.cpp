@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
     currentMode = Menu;
+    gamemode = Training;
 
     table   =  new QTableView(this);
 
@@ -50,6 +51,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
     connect(check, SIGNAL(clicked(bool)),this, SLOT(endg()));
+    connect(arcade, SIGNAL(clicked(bool)), this, SLOT(arcadeMode()));
+    connect(training, SIGNAL(clicked(bool)), this, SLOT(trainingMode()));
 
     labelcompl->hide();
     labelnum->hide();
@@ -64,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     arcade->hide();
     training->hide();
 
+
     MainWindow::menu();
 }
 
@@ -71,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menu()
 {
     qDebug()<<"In Menu";
+
+
     table->hide();
     check->hide();
     labelPT->hide();
@@ -94,67 +100,91 @@ void MainWindow::menu()
 void MainWindow::game()
 {
     qDebug()<<"In game";
-    if(currentMode == Game)
-        return;
+    switch(gamemode){
+    case Training: TrainingGame(); break;
+    case Arcade: ArcadeGame(); break;
+    default: break;
+    }
+//    if(currentMode == Game)
+//        return;
 
-    currentMode = Game;
+//    currentMode = Game;
 
-    start->hide();
-    num->hide();
-    cmb->hide();
-    labelmode->hide();
-    arcade->hide();
-    training->hide();
-    check->show();
-    table->show();
+//    start->hide();
+//    num->hide();
+//    cmb->hide();
+//    labelmode->hide();
+//    arcade->hide();
+//    training->hide();
+//    check->show();
+//    table->show();
 
-    int a = num->text().toInt();
-    int c = 0;
-    if(cmb->currentText() == "Легко")
-        c = 1;
-    else if(cmb->currentText() == "Средне")
-        c = 2;
-    else c = 3;
-
-
-    num->hide();
-    labelcompl->hide();
-    labelnum->hide();
-
-    delegate->SetMaxValue(a*a);
-
-    model = new MagicSquareModel(a, c);
-    model->insertColumns(0,a);
-    model->insertRows(0, a);
-
-    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
-    //connect(model, SIGNAL())
-
-    labelPT->setText("Порядок квадрата: " + QString::number(a));
-    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+//    int a = num->text().toInt();
+//    int c = 0;
+//    if(cmb->currentText() == "Легко")
+//        c = 1;
+//    else if(cmb->currentText() == "Средне")
+//        c = 2;
+//    else c = 3;
 
 
-    labelPT->show();
-    labelIT->show();
+//    num->hide();
+//    labelcompl->hide();
+//    labelnum->hide();
 
-    table->setModel(model);
+//    delegate->SetMaxValue(a*a);
 
-    qDebug()<<"Build";    
+//    model = new MagicSquareModel(a, c);
+//    model->insertColumns(0,a);
+//    model->insertRows(0, a);
+
+//    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
+
+//    labelPT->setText("Порядок квадрата: " + QString::number(a));
+//    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
+
+
+//    labelPT->show();
+//    labelIT->show();
+
+//    table->setModel(model);
+
+//    qDebug()<<"Build";
 
 }
+
+void MainWindow::TrainingGame()
+{
+    QMessageBox::information(this, "Oops", "Training mode is still in development =)");
+}
+
+void MainWindow::ArcadeGame()
+{
+    QMessageBox::information(this, "Oops", "Arcade mode is still in development =)");
+}
+
 
 void MainWindow::endg()
 {
     int a = num->text().toInt();
     if (model->Full(a)){
         QMessageBox::information(this, "Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
-        qDebug() << "It's working!";
+        qDebug() << "Magic";
         MainWindow::menuexs();
     }
     else {
         QMessageBox::information(this, "Попробуйте еще раз", "Квадрат не магический");
         qDebug()<< "Not magic";
     }
+}
+
+void MainWindow::arcadeMode()
+{
+    gamemode = Arcade;
+}
+void MainWindow::trainingMode()
+{
+    gamemode = Training;
 }
 
 void MainWindow::createLayouts()
@@ -212,7 +242,6 @@ void MainWindow::inputInformation()
 
 void MainWindow::menuexs()
 {
-    qDebug()<<"clicked";
     currentMode = Menu;
     MainWindow::menu();
 }
