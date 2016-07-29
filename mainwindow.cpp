@@ -93,6 +93,15 @@ void MainWindow::menu()
 
 }
 
+void MainWindow::trainingMode()
+{
+    gamemode = Training;
+}
+
+void MainWindow::arcadeMode()
+{
+    gamemode = Arcade;
+}
 /*Game*/
 void MainWindow::game()
 {
@@ -109,6 +118,9 @@ void MainWindow::game()
     training->hide();
     check->show();
     table->show();
+
+    if(gamemode == Arcade)
+        t.start();
 
     SquareNumber = num->text().toInt();
     SquareComlexity = 0;
@@ -165,7 +177,7 @@ void MainWindow::endg()
 
 void MainWindow::countPoints()
 {
-    points = time + SquareComlexity * SquareNumber * 890;
+    points = SquareComlexity * SquareNumber * 8900 - time;
 }
 
 void MainWindow::createLayouts()
@@ -226,7 +238,6 @@ void MainWindow::inputInformation()
 
 void MainWindow::menuexs()
 {
-    qDebug()<<"clicked";
     currentMode = Menu;
     MainWindow::menu();
 }

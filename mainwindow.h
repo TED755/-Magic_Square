@@ -80,9 +80,6 @@ private slots:
     void inputInformation();
     void arcadeMode();
     void trainingMode();
-
-    void TrainingGame();
-    void ArcadeGame();
 };
 
 #endif // MAINWINDOW_H
