@@ -36,7 +36,6 @@ bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, 
         square.SetValue(row, col, value.toInt());
         if(square.CheckValue(row, col) == true){
             flag = true;
-            //square.itcount--;
             qDebug()<<"flag2: "<<flag;
         }
         emit dataChanged(index, index);
@@ -72,7 +71,6 @@ bool MagicSquareModel::Full(int n)
 int MagicSquareModel::ItemsCountModel()
 {
     return square.ItemsCount();
-
 }
 
 

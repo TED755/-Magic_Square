@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     training->setChecked(true);
 
     QPalette pal = palette();
-        pal.setColor(backgroundRole(), QColor(Qt::darkGray));
-        table->setPalette(pal);
+    pal.setColor(backgroundRole(), QColor(Qt::darkGray));
+    table->setPalette(pal);
 
     table->setItemDelegate(delegate);
 
@@ -93,52 +93,12 @@ void MainWindow::menu()
 
 }
 
-/*game*/
+/*Game*/
 void MainWindow::game()
 {
-    switch (gamemode) {
-    case Training:
-        TrainingGame();
-        break;
-    case Arcade:
-        ArcadeGame();
-        break;
-    default:
-        break;
-    }
-
-}
-
-void MainWindow::endg()
-{
-    int a = num->text().toInt();
-    if (model->Full(a)){
-        QMessageBox::information(this, "Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
-        qDebug() << "It's working!";
-        MainWindow::menuexs();
-    }
-    else {
-        QMessageBox::information(this, "Попробуйте еще раз", "Квадрат не магический");
-        qDebug()<< "Not magic";
-    }
-}
-
-void MainWindow::arcadeMode()
-{
-    gamemode = Arcade;
-}
-void MainWindow::trainingMode()
-{
-    gamemode = Training;
-}
-
-void MainWindow::TrainingGame()
-{
-    //QMessageBox::information(this, "Oops^^", "Training mode is still in development=)");
     qDebug()<<"In game";
     if(currentMode == Game)
         return;
-
     currentMode = Game;
 
     start->hide();
@@ -150,30 +110,28 @@ void MainWindow::TrainingGame()
     check->show();
     table->show();
 
-    int a = num->text().toInt();
-    int c = 0;
+    SquareNumber = num->text().toInt();
+    SquareComlexity = 0;
     if(cmb->currentText() == "Легко")
-        c = 1;
+        SquareComlexity = 1;
     else if(cmb->currentText() == "Средне")
-        c = 2;
-    else c = 3;
-
+        SquareComlexity = 2;
+    else SquareComlexity = 3;
 
     num->hide();
     labelcompl->hide();
     labelnum->hide();
 
-    delegate->SetMaxValue(a*a);
+    delegate->SetMaxValue(SquareNumber * SquareNumber);
 
-    model = new MagicSquareModel(a, c);
-    model->insertColumns(0,a);
-    model->insertRows(0, a);
+    model = new MagicSquareModel(SquareNumber, SquareComlexity);
+    model->insertColumns(0, SquareNumber);
+    model->insertRows(0, SquareNumber);
 
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
 
-    labelPT->setText("Порядок квадрата: " + QString::number(a));
+    labelPT->setText("Порядок квадрата: " + QString::number(SquareNumber));
     labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
-    qDebug()<<model->ItemsCountModel();
 
 
     labelPT->show();
@@ -182,12 +140,32 @@ void MainWindow::TrainingGame()
     table->setModel(model);
 
     qDebug()<<"Build";
-
 }
 
-void MainWindow::ArcadeGame()
+void MainWindow::endg()
 {
-    QMessageBox::information(this, "Oops^^", "Arcade mode is still in development=)");
+    time = t.elapsed();
+    qDebug()<<"Время: "<<time;
+    if (model->Full(SquareNumber)){
+        if (gamemode == Arcade){
+            countPoints();
+            QMessageBox::information(this, "Вы победили!",
+                                 "КВАДРАТ МАГИЧЕСКИЙ!\nНабрано очков: " + QString::number(points));
+        }
+        else
+            QMessageBox::information(this,"Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
+        qDebug() << "Magic";
+        MainWindow::menuexs();
+    }
+    else {
+        QMessageBox::information(this, "Попробуйте еще раз", "Квадрат не магический");
+        qDebug()<< "Not magic";
+    }
+}
+
+void MainWindow::countPoints()
+{
+    points = time + SquareComlexity * SquareNumber * 890;
 }
 
 void MainWindow::createLayouts()
@@ -236,12 +214,14 @@ void MainWindow::ItemChanged()
 
 void MainWindow::inputInformation()
 {
-    if(model->flag){
-        QMessageBox::information(this, "Информация", "Число введено верно");
+    if(gamemode == Training){
+        if(model->flag){
+            QMessageBox::information(this, "Информация", "Число введено верно");
 
+        }
+        else
+            QMessageBox::information(this, "Информация", "Число введено неверно");
     }
-    else
-        QMessageBox::information(this, "Информация", "Число введено неверно");
 }
 
 void MainWindow::menuexs()

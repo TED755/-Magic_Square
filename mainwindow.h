@@ -16,7 +16,6 @@
 #include <QGroupBox>
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
-#include "mods.h"
 
 class MainWindow : public QWidget
 {
@@ -33,8 +32,10 @@ public:
     GameMode gamemode;
 
 private:
+    QTime t;
     MagicSquareModel *model;
     QTableView* table;
+    MagicDelegate *delegate;
 
     QSpinBox* num;
     QComboBox* cmb;
@@ -62,6 +63,12 @@ private:
 
     void createLayouts();
     void createMenu();
+    void countPoints();
+
+    int points;
+    int time;
+    int SquareComlexity;
+    int SquareNumber;
 
 private slots:
 
@@ -76,10 +83,6 @@ private slots:
 
     void TrainingGame();
     void ArcadeGame();
-private:
-
-    MagicDelegate *delegate;
-
 };
 
 #endif // MAINWINDOW_H
