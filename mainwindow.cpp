@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     table->setItemDelegate(delegate);
 
-    connect(table, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(inputInformation()));
+    connect(table, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(inputInformation(/*index*/)));
 
     num->setMinimum(3);
     num->setMaximum(1000);
@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     createLayouts();
     createMenu();
+    createButtons();
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
     connect(check, SIGNAL(clicked(bool)),this, SLOT(endg()));
@@ -177,7 +178,8 @@ void MainWindow::endg()
 
 void MainWindow::countPoints()
 {
-    points = SquareComlexity * SquareNumber * 8900 - time;
+    //points = SquareComlexity * SquareNumber * 8900 - time;
+    points = SquareNumber * SquareComlexity * 100 - time/1000;
 }
 
 void MainWindow::createLayouts()
@@ -185,6 +187,8 @@ void MainWindow::createLayouts()
     mainLayout = new QVBoxLayout(this);
     layout = new QHBoxLayout(this);
     center = new QGridLayout(this);
+    HorizontalLayout = new QHBoxLayout(this);
+    ButtonsLay = new QGridLayout(this);
 
     center->addWidget(labelcompl, 1, 1, Qt::AlignCenter);
     center->addWidget(cmb, 2, 1, Qt::AlignCenter);
@@ -199,6 +203,8 @@ void MainWindow::createLayouts()
 
     mainLayout->addLayout(layout);
     mainLayout->addLayout(center);
+    HorizontalLayout->addLayout(mainLayout);
+    HorizontalLayout->addLayout(ButtonsLay);
     mainLayout->addWidget(start);
     mainLayout->addWidget(table);
     mainLayout->addWidget(check);
@@ -217,23 +223,57 @@ void MainWindow::createMenu()
     mainLayout->setMenuBar(mainMenu);
 }
 
+void MainWindow::createButtons()
+{
+//    for(int i = 0; i < 4; i++)
+//    {
+//        QPushButton* r = new QPushButton(this);
+//        //r->setGeometry(30, 15 + i*h, w, h);
+// //        ButtonsLay->addWidget(r, i, 0);
+//        layout->addWidget(r, i, j);
+//        buttons.push_back(r);
+//    }
+    qDebug()<<"$: "<<model->numbersSize();
+    for(int n = 0; n < model->numbersSize(); n++)
+        //for(int i = 0; i < model->size(); i++)
+            //for(int j = 0; j < model->size(); j++){
+                {
+                    QPushButton* r = new QPushButton(this);
+                    //r->setGeometry(30, 15 + i*h, w, h);
+            //        ButtonsLay->addWidget(r, i, 0);
+                    layout->addWidget(r);
+                    buttons.push_back(r);
+                }
+                //QPushButton* b = new QPushButton(QString::number((double)n), this);
+                //ButtonsLay->addWidget(b);
+            //}
+}
+
 void MainWindow::ItemChanged()
 {
     labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
-    qDebug()<<model->ItemsCountModel();
-
 }
 
-void MainWindow::inputInformation()
+void MainWindow::inputInformation(/*QModelIndex &index*/)
 {
-    if(gamemode == Training){
-        if(model->flag){
-            QMessageBox::information(this, "Информация", "Число введено верно");
-
-        }
-        else
-            QMessageBox::information(this, "Информация", "Число введено неверно");
+    qDebug()<<"clicked";
+    if(model->flag == 1){
+        qDebug()<<"true";
+        //model->flag = 0;
     }
+    else {
+        qDebug()<<"false";
+        //model->flag = 0;
+    }
+//    int row = index.row();
+//    int col = index.column();
+//    if(gamemode == Training){
+//        //if(model->CheckValueModel(/*row, col)*/){
+//            QMessageBox::information(this, "Информация", "Число введено верно");
+//        }
+//        else
+//            QMessageBox::information(this, "Информация", "Число введено неверно");
+//    }
 }
 
 void MainWindow::menuexs()

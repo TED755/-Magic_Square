@@ -40,7 +40,9 @@ void MagicSquare::Zero(int n)
 
         randomInd = rand() % indexies.size();
         ind = indexies[randomInd];
+        numbers.push_back(matrix[ind.first][ind.second]);
         matrix[ind.first][ind.second] = 0;
+
 
         saveposition.push_back(ind);
 
@@ -51,7 +53,8 @@ void MagicSquare::Zero(int n)
         for(int j = 0; j < matrix.size(); j++)
             if(matrix[i][j] == 0)
                 itcount++;
-    qDebug()<<saveposition;
+    //qDebug()<<saveposition;
+    qDebug()<<"j:"<<numbers;
 }
 
 void MagicSquare::SetValue(int row, int col, int value)
@@ -86,9 +89,9 @@ void MagicSquare::SetValue(int row, int col, int value)
 bool MagicSquare::CheckValue(int row, int col)
 {
     if(matrix[row][col] == matrixcheck[row][col])
-        return true;
+        flag = 1;
     else
-        return false;
+        flag = 0;
 }
 
 bool MagicSquare::isFull(int n)

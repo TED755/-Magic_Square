@@ -21,6 +21,11 @@ public:
     void BuildSquare_even(int n);
     void BuildSquare4(vector<vector<int> > &matrix1, int n);
     void BuildSquare6(vector<vector<int> > &matrix1, int n);
+    void build_version1();
+    void build_version2();
+    void build_version3();
+    void build_version4();
+    int size();
     bool CheckSquare(int n);
     bool CheckValue(int row, int col);
     int check_sum(int n);
@@ -45,7 +50,9 @@ public:
     void SetValue (int row, int col, int value);
     int itcount = 0;
     int complexity;
+    bool flag = 0;
     QList<QPair <int, int>> saveposition;
+    QList<int> numbers;
     QPair<int, int> save;
 
 

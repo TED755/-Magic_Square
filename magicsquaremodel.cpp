@@ -27,23 +27,36 @@ QVariant MagicSquareModel::data (const QModelIndex &ind, int role) const
 
 bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, int role )
 {
-    flag = false;
-    qDebug()<<"flag1: "<<flag;
-    int row = index.row();
-    int col = index.column();
+    //flag = false;
+    //qDebug()<<"flag1: "<<flag;
+    row = index.row();
+    col = index.column();
 
     if( role == Qt::DisplayRole || role == Qt::EditRole){
         square.SetValue(row, col, value.toInt());
+        //square.CheckValueModel(row, col);
+        //CheckValueModel(row, col);
+
         if(square.CheckValue(row, col) == true){
             flag = true;
             qDebug()<<"flag2: "<<flag;
         }
+        else flag = false;
         emit dataChanged(index, index);
-        qDebug()<<"flag3: "<<flag;
+        //qDebug()<<"flag3: "<<flag;
         return true;
     }
 
     return false;
+}
+
+bool MagicSquareModel::CheckValueModel(int row, int col)
+{
+//    row = index.row();
+//    col = index.column();
+    if(square.CheckValue(row, col))
+        flag = 1;/*return true;*/
+    else flag = 0;/*return false;*/
 }
 
 Qt::ItemFlags MagicSquareModel::flags(const QModelIndex &index) const
@@ -71,6 +84,24 @@ bool MagicSquareModel::Full(int n)
 int MagicSquareModel::ItemsCountModel()
 {
     return square.ItemsCount();
+}
+
+void MagicSquareModel::swap()
+{
+    for(int i = 0; i < modelnumbers.size(); i++){
+        modelnumbers[i] = square.numbers[i];
+    }
+}
+
+int MagicSquareModel::size()
+{
+    return square.size();
+}
+
+int MagicSquareModel::numbersSize()
+{
+    return modelnumbers.size();
+    qDebug()<<"model: "<<modelnumbers.size();
 }
 
 

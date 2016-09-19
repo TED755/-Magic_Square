@@ -61,14 +61,20 @@ private:
     QRadioButton* arcade;
     QRadioButton* training;
 
+    QHBoxLayout* HorizontalLayout;
+    QGridLayout* ButtonsLay;
+
     void createLayouts();
     void createMenu();
+    void createButtons();
     void countPoints();
 
     int points;
     int time;
     int SquareComlexity;
     int SquareNumber;
+
+    vector<QPushButton*> buttons;
 
 private slots:
 
