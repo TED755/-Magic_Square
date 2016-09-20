@@ -17,7 +17,7 @@ class MagicSquare
 
 public:
     MagicSquare(int n, int c);
-    void BuildSquare_odd(int n);
+    void BuildSquare_odd();
     void BuildSquare_even(int n);
     void BuildSquare4(vector<vector<int> > &matrix1, int n);
     void BuildSquare6(vector<vector<int> > &matrix1, int n);
@@ -25,6 +25,10 @@ public:
     void build_version2();
     void build_version3();
     void build_version4();
+    void build_version5();
+    void build_version6();
+    void build_version7();
+    void build_version8();
     int size();
     bool CheckSquare(int n);
     bool CheckValue(int row, int col);

@@ -10,7 +10,7 @@ MagicSquare::MagicSquare(int n, int c)
     for (int i = 0; i < matrixcheck.size(); i++)
         matrixcheck[i].resize(n);
 
-    n % 2 != 0 ? BuildSquare_odd(n) : BuildSquare_even(n);
+    n % 2 != 0 ? BuildSquare_odd() : BuildSquare_even(n);
 
     matrixcheck = matrix;
     itcount = 0;
@@ -22,24 +22,38 @@ int MagicSquare::size()
     return matrix.size();
 }
 
-void MagicSquare::BuildSquare_odd(int n)
+void MagicSquare::BuildSquare_odd()
 {
     int x;
-    x = rand()%2;
-    if(n == 3){
-        x = rand()%4;
-        if(x == 0)
-            build_version1();
-        else
-            if(x == 1)
-                build_version2();
-        else
-                if(x == 3)
-                    build_version3();
-        else
-                    build_version4();
+    x = rand()%8;
+    switch (x) {
+    case 0:
+        build_version1();
+        break;
+    case 1:
+        build_version2();
+        break;
+    case 2:
+        build_version3();
+        break;
+    case 3:
+        build_version4();
+        break;
+    case 4:
+        build_version5();
+        break;
+    case 5:
+        build_version6();
+        break;
+    case 6:
+        build_version7();
+        break;
+    case 7:
+        build_version8();
+        break;
+    default:
+        break;
     }
-    else x == 0 ? build_version1() : build_version2();
 }
 
 void MagicSquare::build_version1()
@@ -66,17 +80,41 @@ void MagicSquare::build_version1()
 
 void MagicSquare::build_version2()
 {
-    int n, row = 0, k = 0, column;
+    int row, count = 0, column, n;
+    n = matrix.size();
+    row = n/2;
+    column = n - 1;
+
+    for(count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row--;
+        column++;
+        if(count % n == 0){
+            row++;
+            column-=2;
+        }
+        else{
+            if(column == n)
+                column-=n;
+            else if(row < 0)
+                row+=n;
+        }
+    }
+}
+
+void MagicSquare::build_version3()
+{
+    int n, row = 0, count = 0, column;
     n = matrix.size();
     row = n/2;
     column = 0;
-    for (k = 1; k <= n*n; ++k){
-        matrix[row][column] = k;
+    for (count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
         row++;
         column--;
-        if (k % n == 0){
+        if (count % n == 0){
             column += 2;
-            --row;
+            row--;
         }
         else{
             if (row == n)
@@ -87,30 +125,122 @@ void MagicSquare::build_version2()
     }
 }
 
-void MagicSquare::build_version3()
-{
-    matrix[0][0] = 4;
-    matrix[0][1] = 9;
-    matrix[0][2] = 2;
-    matrix[1][0] = 3;
-    matrix[1][1] = 5;
-    matrix[1][2] = 7;
-    matrix[2][0] = 8;
-    matrix[2][1] = 1;
-    matrix[2][2] = 6;
-}
-
 void MagicSquare::build_version4()
 {
-    matrix[0][0] = 2;
-    matrix[0][1] = 7;
-    matrix[0][2] = 6;
-    matrix[1][0] = 9;
-    matrix[1][1] = 5;
-    matrix[1][2] = 1;
-    matrix[2][0] = 4;
-    matrix[2][1] = 3;
-    matrix[2][2] = 8;
+    int n, row, column, count;
+    n = matrix.size();
+    row = n-1;
+    column = n/2;
+
+    for(count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row++;
+        column--;
+        if(count % n == 0){
+            row -= 2;
+            column++;
+        }
+        else{
+            if (row == n)
+                row -= n;
+            else if (column < 0)
+                column += n;
+        }
+    }
+}
+
+void MagicSquare::build_version5()
+{
+    int n, row, count = 0, column;
+    n = matrix.size();
+    row = n/2;
+    column = n-1;
+
+    for(count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row++;
+        column++;
+        if(count % n == 0){
+            column -= 2;
+            row--;
+        }
+        else{
+            if(row == n)
+                row -= n;
+            else if(column == n)
+                column -= n;
+        }
+    }
+}
+
+void MagicSquare::build_version6()
+{
+    int n, row, column, count;
+    n = matrix.size();
+    row = n - 1;
+    column = n/2;
+
+    for(count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row++;
+        column++;
+        if(count % n == 0){
+            row -= 2;
+            column--;
+        }
+        else{
+            if(row == n)
+                row -= n;
+            else if(column == n)
+                column -= n;
+        }
+    }
+}
+
+void MagicSquare::build_version7()
+{
+    int n, row, column = 0, count;
+    n = matrix.size();
+    row = n/2;
+
+    for(count =  1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row--;
+        column--;
+        if(count % n == 0){
+            row++;
+            column +=2;
+        }
+        else{
+            if(row < 0)
+                row += n;
+            else if(column < 0)
+                column += n;
+        }
+    }
+}
+
+void MagicSquare::build_version8()
+{
+    int n, row = 0, column, count = 0;
+    n = matrix.size();
+    column = n/2;
+
+    for(count = 1; count <= n*n; ++count){
+        matrix[row][column] = count;
+        row--;
+        column--;
+        if(count % n == 0){
+            row += 2;
+            column++;
+        }
+        else{
+            if(row < 0)
+                row += n;
+            else if(column < 0)
+                column += n;
+        }
+    }
 }
 
 void MagicSquare::BuildSquare_even(int n)
