@@ -10,7 +10,7 @@ MagicSquare::MagicSquare(int n, int c)
     for (int i = 0; i < matrixcheck.size(); i++)
         matrixcheck[i].resize(n);
 
-    n % 2 != 0 ? BuildSquare_odd() : BuildSquare_even(n);
+    n % 2 != 0 ? BuildSquare_odd() : BuildSquare_even();
 
     matrixcheck = matrix;
     itcount = 0;
@@ -243,44 +243,68 @@ void MagicSquare::build_version8()
     }
 }
 
-void MagicSquare::BuildSquare_even(int n)
+void MagicSquare::BuildSquare_even()
 {
     srand(time(NULL));
+    int x;
+    even1();
+
+    x = rand()%4;
+
+    switch(x){
+    case 0:
+        break;
+    case 1:
+        even2();
+        break;
+    case 2:
+        even3();
+        break;
+    case 3:
+        even4();
+        break;
+    default:
+        break;
+    }
+}
+void MagicSquare::even1()
+{
     int i, j, count = 0, r, c, sm = 0;
     bool flag = false, cwise;
-    vector < vector <int> > matrix1;
-        matrix1.resize(2*n-2);
-        for (i = 0; i < 2*n-2; i++)
-            matrix1[i].resize(n);
+    int n = matrix.size();
+    vector<vector<int>> matrix1;
+    matrix1.resize(2*n-2);//создание отдельной матрицы
+    for (i = 0; i < 2*n-2; i++)
+        matrix1[i].resize(n);
 
-    for (i = 0; i < 2*n-2; i++)//èíèöèàëèçàöèÿ åå íóëÿìè
+    for (i = 0; i < 2*n-2; i++)//инициализация ее нулями
         for (j = 0; j < n; j++)
             matrix1[i][j] = 0;
 
-    if(n%4 == 2)          //äëÿ ïîñòðîåíèÿ ÷åòíî-÷åòíîãî ïîðÿäêà
-    {             //ïåðâîíà÷àëüíî íóæíî ïîñòðîèòü n-2
+    if(n%4 == 2)          //для построения четно-четного порядка
+    {             //первоначально нужно построить n-2
         n = n - 2;
         flag = true;
     }
 
-    if(n%4 == 0)    //ïîñòðîåíèå ÷åòíî-÷åòíîãî ïîðÿäêà ìåòîäîì êâàäðàòíûõ ðàìîê
+    if(n%4 == 0)    //построение четно-четного порядка методом квадратных рамок
     {
-        cwise = true;              // íàïðàâëåíèå çàïîëíåíèÿ
-        while (sm + 1 < n)    //ïîêà íå ïðîéäåì âñþ ìàòðèöó)  +2
+        cwise = true;              // направление заполнения
+        while (sm + 1 < n)    //пока не пройдем всю матрицу) +2
         {
-            if(cwise)//åñëè äâèæåíèå ïî ÷àñîâîé èñòèííî
+            if(cwise)//если движение по часовой истинно
             {
-                r = (n/2) - 1 + sm; // ñòàðòîâûå çíà÷åíèÿ äëÿ ïî÷àñîâîé //ðÿä
-                c = 0;//ñòîëáåö
-                while(count%(2*n) != 1)//öèêë çàïîëíåíèÿ
-                {//îñòàòîê îò äåëåíèÿ count íà óäâîåííûé ïîðÿäîê íå ðàâåí 1
-                    count = 1+n*sm;//count ïðèñâàèâàåì íîâîå çíà÷åíèå
-                    matrix1[r][c] = count++;//ìàòðèöå ýòî çíà÷åíèå +1
-                    while(count%(n/2) != 1)//äàëåå â ÷åòûðåõ öèêëàõ
+                r = (n/2) - 1 + sm; // стартовые значения для почасовой //ряд
+                c = 0;//столбец
+                while(count%(2*n) != 1)//цикл заполнения
+                {//остаток от деления count на удвоенный порядок не равен 1
+                    count = 1+n*sm;//count присваиваем новое значение
+                    matrix1[r][c] = count++;//матрице это значение +1
+                    while(count%(n/2) != 1)//далее в четырех циклах
                     {
-                        r--;//ïåðåìåùàåìñÿ ïî ìàòðèöå
+                        r--;//перемещаемся по матрице
                         c++;
-                        matrix1[r][c] = count++;//çàïîëíÿÿ åå
+                        matrix1[r][c] = count++;//заполняя ее
                     }
                     matrix1[r][++c] = count++;
                     while(count%(n/2) != 1)
@@ -304,15 +328,15 @@ void MagicSquare::BuildSquare_even(int n)
                         matrix1[r][c] = count++;
                     }
                     cwise = false;
-                }//ïîñëå ïîñëåäåíåãî
-                sm += 2;//óâåëè÷èâàåì sm íà 2
+                }//после последенего
+                sm += 2;//увеличиваем sm на 2
             }
-            if(cwise == false)//åñëè äâèãàåìñÿ ïðîòèâ ÷àñîâîé
+            if(cwise == false)//если двигаемся против часовой
             {
-                r =  (n/2) - 1 + sm;       // ñòàðòîâûå çíà÷åíèÿ äëÿ íåïî÷àñîâîé
+                r =  (n/2) - 1 + sm;// стартовые значения для непочасовой
                 c = n - 1;
                 while(count%(2*n)!= 0)
-                {//âûïîëíÿåì îïåðàöèè çàïîëíåíèÿ äëÿ íåïî÷àñîâîé
+                {//выполняем операции заполнения для непочасовой
                     matrix1[r][c] = count++;
                     while(count%(n/2) != 1)
                     {
@@ -347,7 +371,7 @@ void MagicSquare::BuildSquare_even(int n)
                 sm += 2;
             }
         }
-        for(i = 0; i < n/2 - 1; i++)//âûïîëíÿåì ñäâèãè
+        for(i = 0; i < n/2 - 1; i++)//выполняем сдвиги
             for(j = 0; j < n; j++)
             {
                 if(matrix1[i][j]!= 0)
@@ -361,19 +385,18 @@ void MagicSquare::BuildSquare_even(int n)
             }
         if (!flag)
         {
-            int k;//çàâåäåíèå îòäåëüíîãî ñ÷åò÷èêà
+            int k;//заведение отдельного счетчика
             for(i = n/2 - 1, k = 0; i < n + n/2 -1; i++, k++)
             {
                 for(j = 0; j < n; j++)
-                    matrix[k][j] = matrix1[i][j];//êîïèðîâàíèå ìàòðèöû
+                    matrix[k][j] = matrix1[i][j];//копирование матрицы
             }
         }
     }
-    //ïîñòðîåíèå ÷åòíî-íå÷åòíîãî ïîðÿäêà
+    //построение четно-нечетного порядка
     if(n%4 == 0 && flag == true)
     {
-        n += 2;//ïðèñâàèâàåì ïîðÿäêó èçíà÷àëüíîå çíà÷åíèå
-
+        n += 2;//присваиваем порядку изначальное значение
         vector < vector <int> > matrix2;
         matrix2.resize(2*n-2);
 
@@ -384,7 +407,7 @@ void MagicSquare::BuildSquare_even(int n)
         {
             for(j = 1; j < n - 1; j++)
             {
-                matrix2[i][j] = matrix1[i + (n-2)/2 - 2][j-1] + 2*(n - 1);//äîáàâëåíèå 2*(n-1)
+                matrix2[i][j] = matrix1[i + (n-2)/2 - 2][j-1] + 2*(n - 1);//добавление 2*(n-1)
             }
         }
 
@@ -394,7 +417,7 @@ void MagicSquare::BuildSquare_even(int n)
         matrix2[n-1][0] = n*n;
         i = 1;
 
-        for(j = 1; j < n - 1; j++)         //äîïîëíåíèå âåðõíåé ñòðîêè
+        for(j = 1; j < n - 1; j++)         //дополнение верхней строки
         {
             if (i <= n/2 - 2)
             {
@@ -406,7 +429,7 @@ void MagicSquare::BuildSquare_even(int n)
         matrix2[1][0] = n - 1;
         i = 1;
         int q = 1;
-        for(j = 2; j < n - 1; j++)                  // ëåâûé ñòîëáåö
+        for(j = 2; j < n - 1; j++)// левый столбец
         {
             while(i <= n/4)
             {
@@ -428,9 +451,9 @@ void MagicSquare::BuildSquare_even(int n)
                 j++;
             }
         }
-        // äîáàâëåíèå ÷èñåë â íèæíþþ ñòðîêó è ïðàâûé ñòîëáåö
+        //добавление чисел в нижнюю строку и правый столбец
         for(j = 1; j < n - 1; j++)
-            matrix2[n-1][j] = n*n + 1 - matrix2[0][j];  //êîìïëåìåíòàðíûå ÷èñëà
+            matrix2[n-1][j] = n*n + 1 - matrix2[0][j];  //комплементарные числа
 
         for(i = 1; i < n - 1; i++)
             matrix2[i][n-1] = n*n + 1 - matrix2[i][0];
@@ -438,5 +461,57 @@ void MagicSquare::BuildSquare_even(int n)
         for (i = 0; i < n; i++)
             for (j = 0; j < n; j++)
                 matrix[i][j] = matrix2[i][j];
+    }
+}
+
+void MagicSquare::even2()
+{
+    even1();
+    int i, j, k;
+    int n = matrix.size();
+    for(i = 0; i < n; i++){
+        k = 1;
+        for(j = 0; j <= n/2; j++){
+            int x;
+            x = matrix[i][j];
+            matrix[i][j] = matrix[i][n-k];
+            matrix[i][n-k] = x;
+            k++;
+        }
+    }
+}
+
+void MagicSquare::even3()
+{
+    even1();
+    int i, j, k, n;
+    n = matrix.size();
+    for(i = 0; i < n; i++){
+        k = 1;
+        for(j = 0; j <= n/2; j++){
+            int x;
+            x = matrix[j][i];
+            matrix[j][i] = matrix[n - k][i];
+            matrix[n - k][i] = x;
+            k++;
+        }
+    }
+}
+
+void MagicSquare::even4()
+{
+    even1();
+    even2();
+    int i, j, k, n;
+    n = matrix.size();
+    for(i = 0; i < n; i++){
+        k = 1;
+        for(j = 0; j <= n/2; j++){
+            int x;
+            x = matrix[j][i];
+            matrix[j][i] = matrix[n - k][i];
+            matrix[n - k][i] = x;
+            k++;
+        }
     }
 }
