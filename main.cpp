@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
 
-    w.setGeometry(600, 200, 640, 480);
+    w.setGeometry(600, 200, 720, 480);
 
     w.show();
 

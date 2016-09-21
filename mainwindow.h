@@ -17,13 +17,14 @@
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QMainWindow* mainwinow;
 
     enum MenuMod {Game, Menu};
     MenuMod currentMode;
@@ -32,6 +33,11 @@ public:
     GameMode gamemode;
 
 private:
+    QWidget* MainWidget;
+    QWidget* NumberWidget;
+    QWidget* ComlWidget;
+    QWidget* ModeWidget;
+    QWidget* SettingWidget;
     QTime t;
     MagicSquareModel *model;
     QTableView* table;
@@ -48,6 +54,8 @@ private:
     QGridLayout* center;
     QHBoxLayout* layout;
 
+    QWidget* GameWidget;
+
     QPushButton* start;
     QPushButton* check;
 
@@ -57,6 +65,9 @@ private:
     QLabel* labelPT;//Информация о порядке
     QLabel* labelIT;//показ оставшихся ячеек
 
+    QLabel* aboutNumlabel;
+    QListWidget* numbersList;
+
     QLabel* labelmode;
     QRadioButton* arcade;
     QRadioButton* training;
@@ -64,7 +75,8 @@ private:
     QHBoxLayout* HorizontalLayout;
     QGridLayout* ButtonsLay;
 
-    void createLayouts();
+//    QPushButton* checkLastNumber;
+
     void createMenu();
     void createButtons();
     void countPoints();

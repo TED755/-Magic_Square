@@ -1,30 +1,65 @@
 #include "mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
+    : QMainWindow(parent)
 {
     currentMode = Menu;
 
-    table   =  new QTableView(this);
+    this->setFixedSize(720, 480);
 
-    start  = new QPushButton("&Начать игру", this);
-    check   = new QPushButton("&Проверить квадрат", this);
+    MainWidget = new QWidget(this);
+    MainWidget->setFixedSize(this->size());
 
-    num = new QSpinBox(this);
-    cmb = new QComboBox(this);
+    GameWidget = new QWidget(this);
+    GameWidget->setFixedSize(this->size());
 
-    labelPT   =     new QLabel(this);
-    labelIT = new QLabel(this);
+    SettingWidget = new QWidget(MainWidget);
+    SettingWidget->setGeometry(100, 70, 520, 210);
+    NumberWidget = new QWidget(SettingWidget);
+    NumberWidget->setGeometry(0, 5, 160, 70);
+    ComlWidget = new QWidget(SettingWidget);
+    ComlWidget->setGeometry(360, 5, 160, 70);
+    ModeWidget = new QWidget(SettingWidget);
+    ModeWidget->setGeometry(125, 100, 270, 70);
+
+    labelmode = new QLabel("Режим", ModeWidget);
+    labelmode->setGeometry(120, 0, 51, 20);
+    training = new QRadioButton("Тренировка", ModeWidget);
+    training->setGeometry(20, 26, 117, 22);
+    arcade = new QRadioButton("Аркада", ModeWidget);
+    arcade->setGeometry(170, 26, 91, 22);
+
+    labelcompl = new QLabel("Уровень сложности", ComlWidget);
+    labelcompl->setGeometry(10, 10, 141, 17);
+    cmb = new QComboBox(ComlWidget);
+    cmb->setGeometry(20, 30, 121, 26);
+
+    labelnum = new QLabel("Порядок квадрата", NumberWidget);
+    labelnum->setGeometry(20, 10, 131, 17);
+    num = new QSpinBox(NumberWidget);
+    num->setGeometry(30, 30, 111, 27);
+
+    labelPT = new QLabel(GameWidget);
+    labelPT->setGeometry(10, 30, 161, 17);
+    labelIT = new QLabel(GameWidget);
+    labelIT->setGeometry(460, 30, 251, 20);
+    aboutNumlabel = new QLabel("Невставленные числа", GameWidget);
+    aboutNumlabel->setGeometry(540, 60, 171, 17);
+
+    numbersList = new QListWidget(GameWidget);
+    numbersList->setGeometry(540, 90, 171, 271);
+
+    table   =  new QTableView(GameWidget);
+    table->setGeometry(10, 60, 521, 351);
+
+    start  = new QPushButton("&Начать игру", MainWidget);
+    start->setGeometry(230, 323, 260, 71);
+    check   = new QPushButton("&Проверить квадрат", GameWidget);
+    check->setGeometry(538, 363, 171, 47);
+    //checkLastNumber = new QPushButton("Проверить последнее введеное число", this);
 
     delegate  =   new MagicDelegate();
 
-    labelnum = new QLabel("Порядок квадрата",this);
-    labelcompl = new QLabel("Уровень сложности", this);
-
-    labelmode = new QLabel("Режим",this);
-    arcade = new QRadioButton("Аркада",this);
-    training = new QRadioButton("Тренировка", this);
     training->setChecked(true);
 
     QPalette pal = palette();
@@ -33,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     table->setItemDelegate(delegate);
 
-    connect(table, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(inputInformation(/*index*/)));
+    //connect(table, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(inputInformation(/*index*/)));
 
     num->setMinimum(3);
     num->setMaximum(1000);
@@ -45,27 +80,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     start->setDefault(true);
 
-    createLayouts();
     createMenu();
-    createButtons();
 
     connect(start, SIGNAL(clicked(bool)), this, SLOT(game()));
     connect(check, SIGNAL(clicked(bool)),this, SLOT(endg()));
     connect(arcade, SIGNAL(clicked(bool)), this, SLOT(arcadeMode()));
     connect(training, SIGNAL(clicked(bool)), this, SLOT(trainingMode()));
-
-    labelcompl->hide();
-    labelnum->hide();
-    num->hide();
-    cmb->hide();
-    start->hide();
-    table->hide();
-    check->hide();
-    labelPT->hide();
-    labelIT->hide();
-    labelmode->hide();
-    arcade->hide();
-    training->hide();
+//   connect(checkLastNumber, SIGNAL(clicked(bool)), this, SLOT(inputInformation()));
 
     MainWindow::menu();
 }
@@ -75,23 +96,12 @@ void MainWindow::menu()
 {
     qDebug()<<"In Menu";
 
-    table->hide();
-    check->hide();
-    labelPT->hide();
-    labelIT->hide();
+    GameWidget->hide();
+    MainWidget->show();
+
     if (currentMode == Game)
         return;
     currentMode = Menu;
-
-    start->show();
-    cmb->show();
-    num->show();
-    labelcompl->show();
-    labelnum->show();
-    labelmode->show();
-    arcade->show();
-    training->show();
-
 }
 
 void MainWindow::trainingMode()
@@ -111,14 +121,8 @@ void MainWindow::game()
         return;
     currentMode = Game;
 
-    start->hide();
-    num->hide();
-    cmb->hide();
-    labelmode->hide();
-    arcade->hide();
-    training->hide();
-    check->show();
-    table->show();
+    MainWidget->hide();
+    GameWidget->show();
 
     if(gamemode == Arcade)
         t.start();
@@ -131,10 +135,6 @@ void MainWindow::game()
         SquareComlexity = 2;
     else SquareComlexity = 3;
 
-    num->hide();
-    labelcompl->hide();
-    labelnum->hide();
-
     delegate->SetMaxValue(SquareNumber * SquareNumber);
 
     model = new MagicSquareModel(SquareNumber, SquareComlexity);
@@ -144,11 +144,7 @@ void MainWindow::game()
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(ItemChanged()));
 
     labelPT->setText("Порядок квадрата: " + QString::number(SquareNumber));
-    labelIT->setText("Осталось незаполненных ячеек: "  + QString::number(model->ItemsCountModel()));
-
-
-    labelPT->show();
-    labelIT->show();
+    labelIT->setText("Осталось незаполненных ячеек: " + QString::number(model->ItemsCountModel()));
 
     table->setModel(model);
 
@@ -182,34 +178,6 @@ void MainWindow::countPoints()
     points = SquareNumber * SquareComlexity * 100 - time/1000;
 }
 
-void MainWindow::createLayouts()
-{
-    mainLayout = new QVBoxLayout(this);
-    layout = new QHBoxLayout(this);
-    center = new QGridLayout(this);
-    HorizontalLayout = new QHBoxLayout(this);
-    ButtonsLay = new QGridLayout(this);
-
-    center->addWidget(labelcompl, 1, 1, Qt::AlignCenter);
-    center->addWidget(cmb, 2, 1, Qt::AlignCenter);
-    center->addWidget(labelnum, 1, 2, Qt::AlignCenter);
-    center->addWidget(num, 2, 2, Qt::AlignCenter);
-    center->addWidget(labelmode, 3, 1, 1, 2, Qt::AlignCenter);
-    center->addWidget(training, 4, 1, Qt::AlignCenter);
-    center->addWidget(arcade, 4, 2, Qt::AlignCenter);
-
-    layout->addWidget(labelPT);
-    layout->addWidget(labelIT);
-
-    mainLayout->addLayout(layout);
-    mainLayout->addLayout(center);
-    HorizontalLayout->addLayout(mainLayout);
-    HorizontalLayout->addLayout(ButtonsLay);
-    mainLayout->addWidget(start);
-    mainLayout->addWidget(table);
-    mainLayout->addWidget(check);
-}
-
 void MainWindow::createMenu()
 {
     mainMenu = new QMenuBar(this);
@@ -220,33 +188,11 @@ void MainWindow::createMenu()
     file->addAction("Выйти в меню", this, SLOT(menuexs()));
     file->addAction("Выйти из игры", qApp, SLOT(quit()));
 
-    mainLayout->setMenuBar(mainMenu);
+    this->setMenuBar(mainMenu);
 }
 
 void MainWindow::createButtons()
 {
-//    for(int i = 0; i < 4; i++)
-//    {
-//        QPushButton* r = new QPushButton(this);
-//        //r->setGeometry(30, 15 + i*h, w, h);
-// //        ButtonsLay->addWidget(r, i, 0);
-//        layout->addWidget(r, i, j);
-//        buttons.push_back(r);
-//    }
-    qDebug()<<"$: "<<model->numbersSize();
-    for(int n = 0; n < model->numbersSize(); n++)
-        //for(int i = 0; i < model->size(); i++)
-            //for(int j = 0; j < model->size(); j++){
-                {
-                    QPushButton* r = new QPushButton(this);
-                    //r->setGeometry(30, 15 + i*h, w, h);
-            //        ButtonsLay->addWidget(r, i, 0);
-                    layout->addWidget(r);
-                    buttons.push_back(r);
-                }
-                //QPushButton* b = new QPushButton(QString::number((double)n), this);
-                //ButtonsLay->addWidget(b);
-            //}
 }
 
 void MainWindow::ItemChanged()
@@ -267,13 +213,13 @@ void MainWindow::inputInformation(/*QModelIndex &index*/)
     }
 //    int row = index.row();
 //    int col = index.column();
-//    if(gamemode == Training){
-//        //if(model->CheckValueModel(/*row, col)*/){
-//            QMessageBox::information(this, "Информация", "Число введено верно");
-//        }
-//        else
-//            QMessageBox::information(this, "Информация", "Число введено неверно");
-//    }
+    if(gamemode == Training){
+        if(model->flag == 1){
+            QMessageBox::information(this, "Информация", "Число введено верно");
+        }
+        else
+            QMessageBox::information(this, "Информация", "Число введено неверно");
+    }
 }
 
 void MainWindow::menuexs()

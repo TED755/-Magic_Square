@@ -89,9 +89,9 @@ void MagicSquare::SetValue(int row, int col, int value)
 bool MagicSquare::CheckValue(int row, int col)
 {
     if(matrix[row][col] == matrixcheck[row][col])
-        flag = 1;
+        return true;
     else
-        flag = 0;
+        return false;
 }
 
 bool MagicSquare::isFull(int n)
