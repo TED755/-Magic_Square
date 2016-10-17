@@ -34,7 +34,7 @@ bool MagicSquareModel::setData(const QModelIndex &index, const QVariant &value, 
 
     if( role == Qt::DisplayRole || role == Qt::EditRole){
         square.SetValue(row, col, value.toInt());
-        CheckValueModel(row, col);
+        //CheckValueModel(row, col);
         //CheckValueModel(row, col);
 
         if(square.CheckValue(row, col) == true){
@@ -88,9 +88,9 @@ int MagicSquareModel::ItemsCountModel()
 
 void MagicSquareModel::swap()
 {
-    for(int i = 0; i < modelnumbers.size(); i++){
-        modelnumbers[i] = square.numbers[i];
-    }
+//    for(int i = 0; i < modelnumbers.size(); i++){
+//        modelnumbers[i] = square.numbers[i];
+//    }
 }
 
 int MagicSquareModel::size()

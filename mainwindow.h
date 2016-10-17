@@ -75,7 +75,7 @@ private:
     QHBoxLayout* HorizontalLayout;
     QGridLayout* ButtonsLay;
 
-//    QPushButton* checkLastNumber;
+    QPushButton* checkLastNumber;
 
     void createMenu();
     void createButtons();
@@ -98,6 +98,8 @@ private slots:
     void inputInformation();
     void arcadeMode();
     void trainingMode();
+    void numbersListsSlot();
+    //void Slot();
 };
 
 #endif // MAINWINDOW_H

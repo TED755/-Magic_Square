@@ -2,7 +2,7 @@
 
 bool MagicSquare::CheckSquare(int n)
 {
-    if ((check_sum(n) == 1) /*&& (check_num(n) == 1)*/)
+    if ((check_sum(n) == 1) && (check_num(n) == 1))
         return true;
     else return false;
 }
