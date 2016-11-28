@@ -86,6 +86,18 @@ int MagicSquareModel::ItemsCountModel()
     return square.ItemsCount();
 }
 
+void MagicSquareModel::copynumbers()
+{
+    modelnumbers = square.numbers;
+}
+
+int MagicSquareModel::getNumber(int i)
+{
+    modelnumbers.clear();
+    copynumbers();
+    return modelnumbers[i];
+}
+
 void MagicSquareModel::swap()
 {
 //    for(int i = 0; i < modelnumbers.size(); i++){

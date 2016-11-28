@@ -43,7 +43,6 @@ void MagicSquare::Zero(int n)
         numbers.push_back(matrix[ind.first][ind.second]);
         matrix[ind.first][ind.second] = 0;
 
-
         saveposition.push_back(ind);
 
         x--;
@@ -71,6 +70,14 @@ void MagicSquare::SetValue(int row, int col, int value)
 
 
         matrix[row][col] = value;
+        if(value == matrix[row][col]){
+            for(int i = 0; i < numbers.size(); i++){
+                if(numbers[i] == value){
+                    numbers[i] = 0;
+                    break;
+                }
+            }
+        }
         for (int i = 0; i < matrix.size(); i++)
             for(int j = 0; j < matrix.size(); j++)
                if(matrix[i][j] == 0)

@@ -17,14 +17,13 @@
 #include "magicsquaremodel.h"
 #include "magicdelegate.h"
 
-class MainWindow : public QMainWindow
+class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    QMainWindow* mainwinow;
+    Widget(QWidget *parent = 0);
+    ~Widget();
 
     enum MenuMod {Game, Menu};
     MenuMod currentMode;
@@ -33,11 +32,11 @@ public:
     GameMode gamemode;
 
 private:
-    QWidget* MainWidget;
-    QWidget* NumberWidget;
-    QWidget* ComlWidget;
-    QWidget* ModeWidget;
-    QWidget* SettingWidget;
+    QWidget* NumberWidget;//порядок
+    QWidget* ComplWidget;//сложность
+    QWidget* ModeWidget;//режим
+    QWidget* SettingWidget;//общий
+
     QTime t;
     MagicSquareModel *model;
     QTableView* table;
@@ -47,20 +46,15 @@ private:
     QComboBox* cmb;
     QStringList lst;
 
-    QMenuBar* mainMenu;
+    QMenuBar* MenuBar;
     QMenu* file;
-
-    QVBoxLayout* mainLayout;//Главная компоновка
-    QGridLayout* center;
-    QHBoxLayout* layout;
-
-    QWidget* GameWidget;
 
     QPushButton* start;
     QPushButton* check;
 
     QLabel* labelnum;
     QLabel* labelcompl;
+    QLabel* labelmode;
 
     QLabel* labelPT;//Информация о порядке
     QLabel* labelIT;//показ оставшихся ячеек
@@ -68,7 +62,6 @@ private:
     QLabel* aboutNumlabel;
     QListWidget* numbersList;
 
-    QLabel* labelmode;
     QRadioButton* arcade;
     QRadioButton* training;
 
@@ -77,21 +70,29 @@ private:
 
     QPushButton* checkLastNumber;
 
+    QVBoxLayout* mainLayout;
+    QLabel* welcome;
+
+    QVBoxLayout* infoW;
+
     void createMenu();
-    void createButtons();
     void countPoints();
+    void createLayouts();
+    void setSettings();
+    void hideMenu();
+    void hideGame();
 
     int points;
     int time;
     int SquareComlexity;
     int SquareNumber;
 
-    vector<QPushButton*> buttons;
+    bool flag = false;
 
 private slots:
 
     void menu();
-    void game();    
+    void game();
     void endg();
     void menuexs();
     void ItemChanged();

@@ -14,11 +14,13 @@ public:
     {
         square.Zero(n);
         qDebug()<<square.numbers;
-        modelnumbers = square.numbers;
+        x = square.numbers.size();
     }
 
     bool Full (int n);
     int ItemsCountModel();
+    int getNumber(int i);
+    void copynumbers();
     bool CheckValueModel(int row, int col);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -36,6 +38,7 @@ public:
 
     QList<int> modelnumbers;
 
+    int x;
 private:
     int row;
     int col;
