@@ -115,11 +115,19 @@ void Widget::createMenu()
 {
     MenuBar = new QMenuBar(this);
     file = new QMenu("&Меню",this);
+    about = new QMenu("&О программе", this);
 
     MenuBar->addMenu(file);
+    MenuBar->addMenu(about);
 
     file->addAction("Выйти в меню", this, SLOT(menuexs()));
+    file->addSeparator();
     file->addAction("Выйти из игры", qApp, SLOT(quit()));
+
+    about->addAction("Правила игры и как играть", this, SLOT(aboutRules()));
+    about->addAction("О магических квадратах", this, SLOT(aboutSquares()));
+    about->addSeparator();
+    about->addAction("О разработчиках", this, SLOT(aboutDevelopers()));
 
     mainLayout->setMenuBar(MenuBar);
 }
@@ -190,6 +198,9 @@ void Widget::game()
     model->insertColumns(0, SquareNumber);
     model->insertRows(0, SquareNumber);
 
+
+    //model->
+
     QPalette pal = palette();
     pal.setColor(backgroundRole(), QColor(Qt::darkGray));
     table->setPalette(pal);
@@ -207,10 +218,18 @@ void Widget::game()
 
     table->setModel(model);
 
-    for(int i = 0; i < SquareNumber; i++)
+    QFont tFont;
+
+    tFont.setPointSize(20);
+
+    for(int i = 0; i < SquareNumber; i++){
         table->setColumnWidth(i, 105);
+    }
     for(int i = 0; i < SquareNumber; i++)
         table->setRowHeight(i, 105);
+
+
+    //table->indexWidget(model->index(0, 0))->setFont(tFont);
 
 
 
@@ -240,6 +259,7 @@ void Widget::endg()
         else
             QMessageBox::information(this,"Вы победили!", "КВАДРАТ МАГИЧЕСКИЙ!");
         qDebug() << "Magic";
+        FreeMemory();
         Widget::menuexs();
     }
     else {
@@ -297,6 +317,17 @@ void Widget::inputInformation()
 
 }
 
+void Widget::aboutDevelopers()
+{
+
+}
+
+void Widget::aboutRules()
+{}
+
+void Widget::aboutSquares()
+{}
+
 void Widget::menuexs()
 {
     currentMode = Menu;
@@ -331,6 +362,14 @@ void Widget::hideGame()
     SettingWidget->show();
     start->show();
     welcome->show();
+}
+
+void Widget::FreeMemory()
+{
+    numbersList->clear();
+    time = 0;
+    points = 0;
+    model->FreeMemory();
 }
 
 Widget::~Widget()

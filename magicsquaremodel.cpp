@@ -1,6 +1,5 @@
 #include "magicsquaremodel.h"
 
-
 int MagicSquareModel::rowCount(const QModelIndex &parent) const
 {
     return square.Rows();
@@ -114,6 +113,12 @@ int MagicSquareModel::numbersSize()
 {
     return modelnumbers.size();
     qDebug()<<"model: "<<modelnumbers.size();
+}
+
+void MagicSquareModel::FreeMemory()
+{
+    modelnumbers.clear();
+    square.FreeMemory();
 }
 
 

@@ -122,3 +122,11 @@ int MagicSquare::ItemsCount()
     return itcount;
 }
 
+void MagicSquare::FreeMemory()
+{
+    matrix.clear();
+    matrixcheck.clear();
+    itcount = 0;
+    numbers.clear();
+    saveposition.clear();
+}

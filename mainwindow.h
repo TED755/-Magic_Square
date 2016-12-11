@@ -48,6 +48,7 @@ private:
 
     QMenuBar* MenuBar;
     QMenu* file;
+    QMenu* about;
 
     QPushButton* start;
     QPushButton* check;
@@ -81,6 +82,7 @@ private:
     void setSettings();
     void hideMenu();
     void hideGame();
+    void FreeMemory();
 
     int points;
     int time;
@@ -100,7 +102,10 @@ private slots:
     void arcadeMode();
     void trainingMode();
     void numbersListsSlot();
-    //void Slot();
+
+    void aboutDevelopers();
+    void aboutSquares();
+    void aboutRules();
 };
 
 #endif // MAINWINDOW_H

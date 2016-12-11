@@ -28,35 +28,35 @@ void MagicSquare::BuildSquare_odd()
     x = rand()%8;
     switch (x) {
     case 0:
-        build_version1();
+        build_odd1();
         break;
     case 1:
-        build_version2();
+        build_odd2();
         break;
     case 2:
-        build_version3();
+        build_odd3();
         break;
     case 3:
-        build_version4();
+        build_odd4();
         break;
     case 4:
-        build_version5();
+        build_odd5();
         break;
     case 5:
-        build_version6();
+        build_odd6();
         break;
     case 6:
-        build_version7();
+        build_odd7();
         break;
     case 7:
-        build_version8();
+        build_odd8();
         break;
     default:
         break;
     }
 }
 
-void MagicSquare::build_version1()
+void MagicSquare::build_odd1()
 {
     int row = 0, count = 0, column, n;
     n = matrix.size();
@@ -78,7 +78,7 @@ void MagicSquare::build_version1()
     }
 }
 
-void MagicSquare::build_version2()
+void MagicSquare::build_odd2()
 {
     int row, count = 0, column, n;
     n = matrix.size();
@@ -102,7 +102,7 @@ void MagicSquare::build_version2()
     }
 }
 
-void MagicSquare::build_version3()
+void MagicSquare::build_odd3()
 {
     int n, row = 0, count = 0, column;
     n = matrix.size();
@@ -125,7 +125,7 @@ void MagicSquare::build_version3()
     }
 }
 
-void MagicSquare::build_version4()
+void MagicSquare::build_odd4()
 {
     int n, row, column, count;
     n = matrix.size();
@@ -149,7 +149,7 @@ void MagicSquare::build_version4()
     }
 }
 
-void MagicSquare::build_version5()
+void MagicSquare::build_odd5()
 {
     int n, row, count = 0, column;
     n = matrix.size();
@@ -173,7 +173,7 @@ void MagicSquare::build_version5()
     }
 }
 
-void MagicSquare::build_version6()
+void MagicSquare::build_odd6()
 {
     int n, row, column, count;
     n = matrix.size();
@@ -197,7 +197,7 @@ void MagicSquare::build_version6()
     }
 }
 
-void MagicSquare::build_version7()
+void MagicSquare::build_odd7()
 {
     int n, row, column = 0, count;
     n = matrix.size();
@@ -220,7 +220,7 @@ void MagicSquare::build_version7()
     }
 }
 
-void MagicSquare::build_version8()
+void MagicSquare::build_odd8()
 {
     int n, row = 0, column, count = 0;
     n = matrix.size();
@@ -247,7 +247,7 @@ void MagicSquare::BuildSquare_even()
 {
     srand(time(NULL));
     int x;
-    even1();
+    build_even1();
 
     x = rand()%4;
 
@@ -255,19 +255,19 @@ void MagicSquare::BuildSquare_even()
     case 0:
         break;
     case 1:
-        even2();
+        build_even2();
         break;
     case 2:
-        even3();
+        build_even3();
         break;
     case 3:
-        even4();
+        build_even4();
         break;
     default:
         break;
     }
 }
-void MagicSquare::even1()
+void MagicSquare::build_even1()
 {
     int i, j, count = 0, r, c, sm = 0;
     bool flag = false, cwise;
@@ -464,9 +464,9 @@ void MagicSquare::even1()
     }
 }
 
-void MagicSquare::even2()
+void MagicSquare::build_even2()
 {
-    even1();
+    build_even1();
     int i, j, k;
     int n = matrix.size();
     for(i = 0; i < n; i++){
@@ -481,9 +481,9 @@ void MagicSquare::even2()
     }
 }
 
-void MagicSquare::even3()
+void MagicSquare::build_even3()
 {
-    even1();
+    build_even1();
     int i, j, k, n;
     n = matrix.size();
     for(i = 0; i < n; i++){
@@ -498,10 +498,10 @@ void MagicSquare::even3()
     }
 }
 
-void MagicSquare::even4()
+void MagicSquare::build_even4()
 {
-    even1();
-    even2();
+    build_even1();
+    build_even2();
     int i, j, k, n;
     n = matrix.size();
     for(i = 0; i < n; i++){

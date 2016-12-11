@@ -21,6 +21,7 @@ public:
     int ItemsCountModel();
     int getNumber(int i);
     void copynumbers();
+    void FreeMemory();
     bool CheckValueModel(int row, int col);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

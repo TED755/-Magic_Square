@@ -19,20 +19,20 @@ public:
     MagicSquare(int n, int c);
     void BuildSquare_odd();
     void BuildSquare_even();
-    void even1();
-    void even2();
-    void even3();
-    void even4();
-    void BuildSquare4(vector<vector<int> > &matrix1, int n);
-    void BuildSquare6(vector<vector<int> > &matrix1, int n);
-    void build_version1();
-    void build_version2();
-    void build_version3();
-    void build_version4();
-    void build_version5();
-    void build_version6();
-    void build_version7();
-    void build_version8();
+
+    void build_even1();
+    void build_even2();
+    void build_even3();
+    void build_even4();
+
+    void build_odd1();
+    void build_odd2();
+    void build_odd3();
+    void build_odd4();
+    void build_odd5();
+    void build_odd6();
+    void build_odd7();
+    void build_odd8();
     int size();
     bool CheckSquare(int n);
     bool CheckValue(int row, int col);
@@ -62,6 +62,8 @@ public:
     QList<QPair <int, int>> saveposition;
     QList<int> numbers;
     QPair<int, int> save;
+
+    void FreeMemory();
 
 
 private:

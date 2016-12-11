@@ -3,7 +3,6 @@
 
 MagicDelegate::MagicDelegate()
 {
-
 }
 
 void MagicDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -12,14 +11,15 @@ void MagicDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option, 
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::lightGray);
     painter->setBrush(brush);
+    //painter->drawText(, "te");
     if(index.data().toInt() == 0)
     {
         painter->setPen(Qt::darkGray);
         painter->drawRect(QRect(option.rect.x() , option.rect.y() , 105, 105));
-
     }
-    else
+    else{
         QStyledItemDelegate::paint(painter, option,index);
+    }
 }
 
 
