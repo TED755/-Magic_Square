@@ -22,7 +22,6 @@ public:
     int getNumber(int i);
     void copynumbers();
     void FreeMemory();
-    bool CheckValueModel(int row, int col);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex())const override;
@@ -33,7 +32,6 @@ public:
 
     bool flag = true;
 
-    void swap();
     int size();
     int numbersSize();
 

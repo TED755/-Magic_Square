@@ -52,7 +52,6 @@ void MagicSquare::Zero(int n)
         for(int j = 0; j < matrix.size(); j++)
             if(matrix[i][j] == 0)
                 itcount++;
-    //qDebug()<<saveposition;
     qDebug()<<"j:"<<numbers;
 }
 
@@ -62,13 +61,6 @@ void MagicSquare::SetValue(int row, int col, int value)
 
     if(row >= 0 && row < matrix.size()
             && col >=0 && col <  matrix[0].size()){
-        //itcount *= 0;
-        //        for (int i = 0; i < matrix.size(); i++)
-        //            for(int j = 0; j < matrix.size(); j++)
-        //               if(matrix[i][j] == 0)
-        //                    itcount++;
-
-
         matrix[row][col] = value;
         if(value == matrix[row][col]){
             for(int i = 0; i < numbers.size(); i++){
@@ -84,13 +76,8 @@ void MagicSquare::SetValue(int row, int col, int value)
                     count++;
         itcount = count;
         count = 0;
-        //itcount--;
 
     }
-    //       }
-
-    //else
-    //   return;
 }
 
 bool MagicSquare::CheckValue(int row, int col)

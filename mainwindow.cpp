@@ -24,6 +24,7 @@ void Widget::createLayouts()
     SettingWidget = new QWidget(this);
 
     NumberWidget = new QWidget(SettingWidget);
+    NumberWidget->setToolTip("Выберите порядка квадрата");
     labelnum = new QLabel("Порядок", NumberWidget);
     num = new QSpinBox(NumberWidget);
     QVBoxLayout *wlay1 = new QVBoxLayout();
@@ -33,6 +34,7 @@ void Widget::createLayouts()
     NumberWidget->setLayout(wlay1);
 
     ComplWidget = new QWidget(SettingWidget);
+    ComplWidget->setToolTip("Выберите уровень сложности");
     labelcompl = new QLabel("Сложность", ComplWidget);
     cmb = new QComboBox(ComplWidget);
     QVBoxLayout *wlay2 = new QVBoxLayout();
@@ -42,6 +44,7 @@ void Widget::createLayouts()
     ComplWidget->setLayout(wlay2);
 
     ModeWidget = new QWidget(SettingWidget);
+    ModeWidget->setToolTip("Выберите режим игры");
     labelmode = new QLabel("Режим", ModeWidget);
     training = new QRadioButton("Тренировка", ModeWidget);
     arcade = new QRadioButton("Аркада", ModeWidget);
@@ -89,10 +92,13 @@ void Widget::createLayouts()
     labelIT = new QLabel(this);
     labelIT->setAlignment(Qt::AlignCenter);
     check = new QPushButton("&Проверить квадрат", this);
+    check->setToolTip("Проверить квадрат на магичность");
     checkLastNumber = new QPushButton("П&роверить число", this);
+    checkLastNumber->setToolTip("Проверить последнее введеное число");
     aboutNumlabel = new QLabel("Неиспользованные числа", this);
     aboutNumlabel->setAlignment(Qt::AlignCenter);
     numbersList = new QListWidget(this);
+    numbersList->setToolTip("Числа, которые необходимо вставить");
     infoW->addWidget(labelPT);
     infoW->addWidget(labelIT);
     infoW->addWidget(aboutNumlabel);
@@ -124,10 +130,7 @@ void Widget::createMenu()
     file->addSeparator();
     file->addAction("Выйти из игры", qApp, SLOT(quit()));
 
-    about->addAction("Правила игры и как играть", this, SLOT(aboutRules()));
-    about->addAction("О магических квадратах", this, SLOT(aboutSquares()));
-    about->addSeparator();
-    about->addAction("О разработчиках", this, SLOT(aboutDevelopers()));
+    about->addAction("О программе", this, SLOT(aboutDevelopers()));
 
     mainLayout->setMenuBar(MenuBar);
 }
@@ -198,9 +201,6 @@ void Widget::game()
     model->insertColumns(0, SquareNumber);
     model->insertRows(0, SquareNumber);
 
-
-    //model->
-
     QPalette pal = palette();
     pal.setColor(backgroundRole(), QColor(Qt::darkGray));
     table->setPalette(pal);
@@ -215,6 +215,7 @@ void Widget::game()
     numbersListsSlot();
     labelPT->setText("Порядок : " + QString::number(SquareNumber));
     labelIT->setText("Осталось ячеек: " + QString::number(model->ItemsCountModel()));
+    labelIT->setToolTip("Количество пустых ячеек");
 
     table->setModel(model);
 
@@ -227,11 +228,6 @@ void Widget::game()
     }
     for(int i = 0; i < SquareNumber; i++)
         table->setRowHeight(i, 105);
-
-
-    //table->indexWidget(model->index(0, 0))->setFont(tFont);
-
-
 
     qDebug()<<"Build";
 }
@@ -270,7 +266,6 @@ void Widget::endg()
 
 void Widget::countPoints()
 {
-    //points = SquareComlexity * SquareNumber * 8900 - time;
     points = SquareNumber * SquareComlexity * 100 - time/1000;
 }
 
@@ -319,14 +314,10 @@ void Widget::inputInformation()
 
 void Widget::aboutDevelopers()
 {
-
+    QMessageBox::information(this, "О программе",
+                             "Magic Square version 1.0\nDevelopted by Evgeny Tikhomirov\n"
+                             "Yaroslavl, 2015-2016");
 }
-
-void Widget::aboutRules()
-{}
-
-void Widget::aboutSquares()
-{}
 
 void Widget::menuexs()
 {

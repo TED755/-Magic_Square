@@ -104,8 +104,6 @@ private slots:
     void numbersListsSlot();
 
     void aboutDevelopers();
-    void aboutSquares();
-    void aboutRules();
 };
 
 #endif // MAINWINDOW_H

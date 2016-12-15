@@ -11,7 +11,6 @@ void MagicDelegate::paint(QPainter *painter,const QStyleOptionViewItem &option, 
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::lightGray);
     painter->setBrush(brush);
-    //painter->drawText(, "te");
     if(index.data().toInt() == 0)
     {
         painter->setPen(Qt::darkGray);

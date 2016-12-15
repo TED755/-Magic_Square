@@ -35,14 +35,6 @@ int MagicSquare::check_sum(int n)
 
 int MagicSquare::check_num(int n)
 {//check one that one time
-//    vector <int> b;
-//    b.resize(n);
-//    for (int i = 0; i < n; i++)
-//        for (int j = 0; j < n; j++)
-//            if (b[matrix[i][j] - 1] == 0)
-//                b[matrix[i][j] - 1]++;
-//            else return 0;
-//    return 1;
     int *b;
     b = (int*)malloc(n*n *sizeof(int));
     for (int m = 0; m < n*n; m++)
