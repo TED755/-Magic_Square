@@ -91,6 +91,8 @@ private:
 
     bool flag = false;
 
+    bool SpecFlag = false;
+
 private slots:
 
     void menu();
@@ -104,6 +106,7 @@ private slots:
     void numbersListsSlot();
 
     void aboutDevelopers();
+    void OnlySquare();
 };
 
 #endif // MAINWINDOW_H

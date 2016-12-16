@@ -7,12 +7,15 @@
 class MagicSquareModel : public QAbstractTableModel
 {
 private:
-    MagicSquare square;
+
 
 public:
+    MagicSquare square;
     MagicSquareModel(int n, int c) : square(n, c)
     {
-        square.Zero(n);
+        if(BuildFlag)
+            square.Zero(n);
+
         qDebug()<<square.numbers;
         x = square.numbers.size();
     }
@@ -31,6 +34,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     bool flag = true;
+    bool BuildFlag = false;
 
     int size();
     int numbersSize();

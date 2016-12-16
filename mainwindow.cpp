@@ -126,8 +126,9 @@ void Widget::createMenu()
     MenuBar->addMenu(file);
     MenuBar->addMenu(about);
 
-    file->addAction("Выйти в меню", this, SLOT(menuexs()));
+    file->addAction("Изменить тип построения", this, SLOT(OnlySquare()));
     file->addSeparator();
+    file->addAction("Выйти в меню", this, SLOT(menuexs()));
     file->addAction("Выйти из игры", qApp, SLOT(quit()));
 
     about->addAction("О программе", this, SLOT(aboutDevelopers()));
@@ -201,6 +202,11 @@ void Widget::game()
     model->insertColumns(0, SquareNumber);
     model->insertRows(0, SquareNumber);
 
+    if(!SpecFlag){
+        model->square.Zero(SquareNumber);
+        model->x = model->square.numbers.size();
+    }
+
     QPalette pal = palette();
     pal.setColor(backgroundRole(), QColor(Qt::darkGray));
     table->setPalette(pal);
@@ -269,7 +275,21 @@ void Widget::countPoints()
     points = SquareNumber * SquareComlexity * 100 - time/1000;
 }
 
-
+void Widget::OnlySquare()
+{
+    SpecFlag ? SpecFlag = false : SpecFlag = true;
+    qDebug()<<"Flag: "<<SpecFlag;
+    if(SpecFlag){
+        QMessageBox::information(this, "Информация", "Включен режим демонстрации квадрата");
+        arcade->setEnabled(false);
+        cmb->setEnabled(false);
+    }
+    else{
+        QMessageBox::information(this, "Информация", "Включен режим игры");
+        arcade->setEnabled(true);
+        cmb->setEnabled(true);
+    }
+}
 
 void Widget::numbersListsSlot()
 {
